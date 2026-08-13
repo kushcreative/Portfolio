@@ -878,7 +878,6 @@ footer{
     <span class="trust-item">Motion Graphics</span>
     <span class="trust-item">3D Visualization</span>
     <span class="trust-item">Visual Design</span>
-    <span class="trust-item">Poster Design</span>
   </div>
 </div>
 
@@ -918,7 +917,7 @@ footer{
       <div class="service-num">02</div>
       <span class="service-icon">◰</span>
       <div class="service-name">Graphic Design</div>
-      <div class="service-desc">Print and digital design across posters, packaging and editorial — precise, expressive and production-ready.</div>
+      <div class="service-desc">Digital design across editorial layouts and visual campaigns — precise, expressive and production-ready.</div>
     </div>
     <div class="service-item reveal">
       <div class="service-num">03</div>
@@ -931,12 +930,6 @@ footer{
       <span class="service-icon">◈</span>
       <div class="service-name">3D Visualization</div>
       <div class="service-desc">Photorealistic product renders and abstract 3D compositions with precise lighting and material work.</div>
-    </div>
-    <div class="service-item reveal">
-      <div class="service-num">05</div>
-      <span class="service-icon">◻</span>
-      <div class="service-name">Poster Design</div>
-      <div class="service-desc">Experimental and commercial poster series exploring geometry, layered type and bold visual storytelling.</div>
     </div>
   </div>
 </section>
@@ -994,16 +987,6 @@ footer{
     <a href="work.html" class="view-all reveal">View All Work ↗</a>
   </div>
   <div class="work-grid reveal">
-    <a href="project-poster.html" class="work-card">
-      <canvas class="work-canvas" data-idx="1" aria-label="Poster Design project preview"></canvas>
-      <div class="work-hover-overlay" aria-hidden="true"></div>
-      <div class="work-arrow" aria-hidden="true">↗</div>
-      <div class="work-info">
-        <div class="work-tags"><span class="work-tag">Graphic Design</span></div>
-        <p class="work-title">Poster Design</p>
-        <p class="work-cta-line">View Case Study →</p>
-      </div>
-    </a>
     <a href="project-chronex.html" class="work-card">
       <canvas class="work-canvas" data-idx="2" aria-label="CHRONEX product render preview"></canvas>
       <div class="work-hover-overlay" aria-hidden="true"></div>
@@ -1126,11 +1109,11 @@ footer{
 <section class="branding-sec" id="branding">
   <p class="sec-label reveal">Graphic Design</p>
   <h2 class="sec-title reveal">Real-World <span>Branding</span></h2>
-  <p class="reveal" style="font-size:.92rem;line-height:1.8;color:var(--muted);max-width:520px;font-weight:300;margin-top:-1.5rem;margin-bottom:.5rem;">High-fidelity mockups across print and physical touchpoints — business cards, letterheads, standees and more.</p>
+  <p class="reveal" style="font-size:.92rem;line-height:1.8;color:var(--muted);max-width:520px;font-weight:300;margin-top:-1.5rem;margin-bottom:.5rem;">High-fidelity mockups across physical touchpoints — business cards, letterheads, standees and more.</p>
   <div class="branding-grid reveal">
     <div class="branding-item branding-item--wide">
       <div class="mockup-placeholder lazy-shimmer" style="min-height:180px;">Business Card — 4K Mockup</div>
-      <div class="branding-caption"><div class="bc-label">Print</div><div class="bc-title">NEXORA Business Cards</div></div>
+      <div class="branding-caption"><div class="bc-label">Stationery</div><div class="bc-title">NEXORA Business Cards</div></div>
     </div>
     <div class="branding-item branding-item--tall">
       <div class="mockup-placeholder lazy-shimmer" style="min-height:300px;">Standee — 4K Mockup</div>
@@ -1139,14 +1122,6 @@ footer{
     <div class="branding-item branding-item--square">
       <div class="mockup-placeholder lazy-shimmer">Letterhead</div>
       <div class="branding-caption"><div class="bc-label">Stationery</div><div class="bc-title">Corporate Letterhead</div></div>
-    </div>
-    <div class="branding-item branding-item--wide">
-      <div class="mockup-placeholder lazy-shimmer" style="min-height:160px;">Packaging — 4K Mockup</div>
-      <div class="branding-caption"><div class="bc-label">Product</div><div class="bc-title">Brand Packaging</div></div>
-    </div>
-    <div class="branding-item branding-item--tall">
-      <div class="mockup-placeholder lazy-shimmer" style="min-height:280px;">Poster — 4K Mockup</div>
-      <div class="branding-caption"><div class="bc-label">Print</div><div class="bc-title">Campaign Poster</div></div>
     </div>
     <div class="branding-item branding-item--square">
       <div class="mockup-placeholder lazy-shimmer">Social Template</div>
@@ -1174,7 +1149,7 @@ footer{
       <div class="exp-mini">
         <div class="exp-mini-icon">🎨</div>
         <div class="exp-mini-name">Graphic Design</div>
-        <div class="exp-mini-desc">Visual identities, print and digital design.</div>
+        <div class="exp-mini-desc">Visual identities and digital design systems.</div>
       </div>
       <div class="exp-mini">
         <div class="exp-mini-icon">◈</div>
@@ -1240,7 +1215,6 @@ footer{
         <a href="work.html" class="ft-col-link">Brand Identity</a>
         <a href="work.html" class="ft-col-link">3D Art</a>
         <a href="work.html" class="ft-col-link">Motion Graphics</a>
-        <a href="work.html" class="ft-col-link">Print Design</a>
       </div>
     </div>
   </div>
@@ -1259,7 +1233,7 @@ window.addEventListener('load', () => {
 });
 
 /* ── MARQUEE ── */
-const mItems = ['BRANDING','MOTION','3D','POSTERS','VISUAL DESIGN'];
+const mItems = ['BRANDING','MOTION','3D','VISUAL DESIGN'];
 const mq = document.getElementById('mq');
 let mHtml = '';
 const repeated = [...mItems, ...mItems, ...mItems, ...mItems];
@@ -1389,7 +1363,7 @@ document.querySelectorAll('.work-canvas').forEach((c) => {
     ];
     shapes[i%shapes.length]();
     ctx.restore();
-    const labels = ['NEXORA','POSTER','CHRONEX','ECHOES'];
+    const labels = ['NEXORA','','CHRONEX','ECHOES'];
     ctx.font=`700 ${w*.09}px "Bebas Neue",sans-serif`; ctx.textAlign='center'; ctx.textBaseline='bottom';
     ctx.fillStyle='rgba(245,240,232,.15)'; ctx.fillText(labels[i]||'PROJECT',w*.5,h*.88);
   };

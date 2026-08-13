@@ -89,7 +89,7 @@
         {
           num: '03',
           title: 'Final Render',
-          desc: 'Polished renders with gradient lighting, colour grading and export for digital and print deliverables.',
+          desc: 'Polished renders with gradient lighting, colour grading and export for digital deliverables.',
           label: 'Final Render',
           color: '#3a7336',
         },

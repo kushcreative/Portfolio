@@ -258,7 +258,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3
   <button class="filter-btn active" data-filter="all">All</button>
   <button class="filter-btn" data-filter="branding">Branding</button>
   <button class="filter-btn" data-filter="3d">3D Art</button>
-  <button class="filter-btn" data-filter="graphic">Graphic Design</button>
   <button class="filter-btn" data-filter="motion">Motion</button>
 </div>
 
@@ -282,20 +281,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3
         </div>
       </div>
     </div>
-    <a href="project-poster.html" class="proj-card reveal" data-cat="graphic">
-      <div class="proj-thumb">
-        <canvas class="proj-canvas" data-project="poster"></canvas>
-        <div class="proj-arrow">↗</div>
-      </div>
-      <div class="proj-body">
-        <div class="proj-meta">
-          <span class="proj-tag">Graphic Design</span>
-          <span class="proj-year">2024</span>
-        </div>
-        <h2 class="proj-title">Poster Design</h2>
-        <p class="proj-desc">A series of experimental poster designs exploring typography, geometry and visual storytelling.</p>
-      </div>
-    </a>
     <div class="proj-card proj-card--modal reveal" data-cat="3d">
       <div class="proj-thumb">
         <canvas class="proj-canvas" data-project="chronex"></canvas>
@@ -378,11 +363,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3
 <section class="branding-sec" id="branding">
   <p class="sec-label reveal">Graphic Design</p>
   <h2 class="sec-title reveal">Real-World <span>Branding</span></h2>
-  <p class="reveal" style="font-size:.92rem;line-height:1.8;color:var(--muted);max-width:520px;font-weight:300;margin-top:-1.5rem;margin-bottom:.5rem;">Print-ready mockups and physical brand applications — hover to explore each piece.</p>
+  <p class="reveal" style="font-size:.92rem;line-height:1.8;color:var(--muted);max-width:520px;font-weight:300;margin-top:-1.5rem;margin-bottom:.5rem;">High-fidelity mockups and physical brand applications — hover to explore each piece.</p>
   <div class="branding-grid reveal">
     <div class="branding-item branding-item--wide">
       <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/business-card-4k.jpg" alt="NEXORA business card mockup" width="800" height="450">
-      <div class="branding-caption"><div class="bc-label">Print</div><div class="bc-title">Business Cards</div></div>
+      <div class="branding-caption"><div class="bc-label">Stationery</div><div class="bc-title">Business Cards</div></div>
     </div>
     <div class="branding-item branding-item--tall">
       <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/standee-4k.jpg" alt="Event standee mockup" width="600" height="800">
@@ -391,14 +376,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3
     <div class="branding-item branding-item--square">
       <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/letterhead-4k.jpg" alt="Corporate letterhead mockup" width="600" height="600">
       <div class="branding-caption"><div class="bc-label">Stationery</div><div class="bc-title">Letterhead</div></div>
-    </div>
-    <div class="branding-item branding-item--wide">
-      <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/packaging-4k.jpg" alt="Brand packaging mockup" width="800" height="450">
-      <div class="branding-caption"><div class="bc-label">Product</div><div class="bc-title">Packaging Design</div></div>
-    </div>
-    <div class="branding-item branding-item--tall">
-      <div class="mockup-placeholder lazy-shimmer" style="min-height:280px;">Poster — 4K Mockup</div>
-      <div class="branding-caption"><div class="bc-label">Print</div><div class="bc-title">Campaign Poster</div></div>
     </div>
     <div class="branding-item branding-item--square">
       <div class="mockup-placeholder lazy-shimmer">Social Template</div>
@@ -433,7 +410,6 @@ document.querySelectorAll('.filter-btn').forEach(btn=>{
 // PROJECT CANVASES
 const palettes={
   nexora:{bg:['#0d1a0d','#1a3318','#2a5628'],accent:'rgba(78,158,73,'},
-  poster:{bg:['#1a1408','#332a14','#4a3d1e'],accent:'rgba(160,120,64,'},
   chronex:{bg:['#0a0d1a','#141d33','#1e2d4a'],accent:'rgba(80,130,190,'},
   echoes:{bg:['#120a1a','#211433','#321e4a'],accent:'rgba(140,80,200,'}
 };
@@ -451,10 +427,6 @@ document.querySelectorAll('.proj-canvas').forEach(c=>{
       const hex=(r,label)=>{ctx.beginPath();for(let k=0;k<6;k++){const a=k*Math.PI/3;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);}ctx.closePath();ctx.strokeStyle=pal.accent+'.35)';ctx.lineWidth=1.5;ctx.stroke();};
       hex(h*.35);hex(h*.22);hex(h*.1);
       ctx.font=`700 ${w*.1}px "Bebas Neue",sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(245,240,232,.3)';ctx.fillText('NEXORA',0,0);
-    } else if(key==='poster'){
-      for(let i=-3;i<=3;i++){ctx.beginPath();ctx.moveTo(i*w*.12,-h*.4);ctx.lineTo(i*w*.12,h*.4);ctx.strokeStyle='rgba(245,240,232,.07)';ctx.lineWidth=1;ctx.stroke();}
-      ctx.beginPath();ctx.arc(0,0,h*.22,0,Math.PI*2);ctx.strokeStyle=pal.accent+'.4)';ctx.lineWidth=2;ctx.stroke();
-      ctx.font=`700 ${w*.08}px "Bebas Neue",sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(245,240,232,.25)';ctx.fillText('POSTER',0,0);
     } else if(key==='chronex'){
       ctx.beginPath();ctx.arc(0,0,h*.28,0,Math.PI*2);ctx.strokeStyle=pal.accent+'.3)';ctx.lineWidth=2;ctx.stroke();
       ctx.beginPath();ctx.arc(0,0,h*.2,0,Math.PI*2);ctx.strokeStyle=pal.accent+'.15)';ctx.lineWidth=1;ctx.stroke();
