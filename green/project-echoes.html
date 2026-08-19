@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECHOES — Kushal</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
+<link rel="alternate icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f5f0e8;--bg2:#ece7dc;--bg3:#e4ddd0;--text:#1a2318;--muted:#6b7a68;--muted2:#8a9986;--border:rgba(26,35,24,0.1);--border2:rgba(26,35,24,0.18);--green:#1e3d1c;--green2:#2a5628;--green3:#3a7336;--cream:#f5f0e8;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--green2);}
+/* Global nav/header CSS now lives in shared.css (single source of truth) */
+.proj-hero{min-height:92vh;display:grid;grid-template-columns:1fr 1.2fr;align-items:center;padding:8rem 3rem 5rem 5rem;background:var(--green);position:relative;overflow:hidden;}
+.proj-hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(245,240,232,.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
+.proj-hero-left{position:relative;z-index:2;}
+.proj-breadcrumb{font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.45);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem;}
+.proj-breadcrumb a{color:rgba(245,240,232,.45);text-decoration:none;transition:color .2s;}
+.proj-breadcrumb a:hover{color:rgba(245,240,232,.8);}
+.proj-breadcrumb span{color:rgba(245,240,232,.25);}
+.proj-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,9vw,9rem);letter-spacing:.04em;color:var(--cream);line-height:.9;margin-bottom:1.5rem;}
+.proj-tagline{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-style:italic;color:rgba(245,240,232,.65);margin-bottom:2.5rem;line-height:1.7;max-width:450px;}
+.proj-meta-row{display:flex;gap:2.5rem;flex-wrap:wrap;}
+.pmi-label{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,.4);margin-bottom:.35rem;}
+.pmi-val{font-size:.9rem;font-weight:500;color:rgba(245,240,232,.8);}
+.proj-hero-right{display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
+#projCanvas{width:100%;max-width:480px;height:480px;display:block;}
+.proj-content{padding:5rem 3rem 4rem 5rem;max-width:860px;}
+.proj-section-label{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--green3);margin-bottom:.75rem;}
+.proj-section-title{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:.04em;color:var(--green);margin-bottom:1.5rem;line-height:1.05;}
+.proj-text{font-size:1.05rem;line-height:1.9;color:var(--muted);font-weight:300;margin-bottom:1.5rem;}
+.proj-text strong{color:var(--text);font-weight:600;}
+.process-sec{background:var(--bg2);padding:5rem 3rem 5rem 5rem;border-top:1px solid var(--border);}
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:2.5rem;}
+.process-step{background:var(--bg);padding:2rem 1.75rem;}
+.ps-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--green3);opacity:.25;line-height:1;margin-bottom:.75rem;}
+.ps-title{font-size:.95rem;font-weight:700;color:var(--green);margin-bottom:.5rem;}
+.ps-desc{font-size:.82rem;line-height:1.7;color:var(--muted);}
+.next-sec{background:var(--green);padding:4rem 3rem 4rem 5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;}
+.next-label{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.45);margin-bottom:.5rem;}
+.next-title{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.04em;color:var(--cream);}
+.next-link{display:inline-flex;align-items:center;gap:.6rem;background:rgba(245,240,232,.12);color:var(--cream);border:1.5px solid rgba(245,240,232,.2);padding:.9rem 2rem;border-radius:4px;font-size:.82rem;font-weight:600;text-decoration:none;letter-spacing:.06em;transition:background .2s;align-self:center;}
+.next-link:hover{background:rgba(245,240,232,.2);}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3rem 2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.ft-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--green);}
+.ft-copy{font-size:.75rem;color:var(--muted);margin-top:.2rem;}
+.ft-links{display:flex;gap:2rem;}
+.ft-link{font-size:.72rem;color:var(--muted);text-decoration:none;letter-spacing:.08em;transition:color .2s;}
+.ft-link:hover{color:var(--green);}
+.back-top{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s;}
+.back-top:hover{color:var(--green);}
+@media(max-width:1024px){
+  .proj-hero{grid-template-columns:1fr;padding:8rem 1.5rem 4rem;}
+  #projCanvas{height:260px;}
+  .proj-content,.process-sec,.next-sec{padding-left:1.5rem;padding-right:1.5rem;}
+  .process-grid{grid-template-columns:1fr;}
+}
+/* Nav responsive/mobile-menu CSS now lives in shared.css (single source of truth) */
+
+</style></head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">KUSHAL.<div class="nav-logo-dot"></div></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/work" class="active">Work</a></li>
+    <li><a href="/creative-os">Creative OS</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+  <a href="/contact" class="nav-cta">Hire Me ↗</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<!-- MOBILE MENU OVERLAY -->
+<div class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-modal="true" aria-label="Navigation">
+  <button class="nav-mobile-close" id="navMobileClose" aria-label="Close navigation">✕</button>
+  <a href="/">Home</a>
+  <a href="/work">Work</a>
+  <a href="/creative-os">Creative OS</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+  <a href="/contact" class="nav-mobile-cta">Hire Me ↗</a>
+</div>
+<section class="proj-hero">
+  <div class="proj-hero-left">
+    <div class="proj-breadcrumb"><a href="/work">Work</a><span>/</span>ECHOES</div>
+    <h1 class="proj-title">ECHOES</h1>
+    <p class="proj-tagline">A kinetic motion graphics piece that translates the visual language of sound into pure geometric form and rhythm.</p>
+    <div class="proj-meta-row">
+      <div class="proj-meta-item"><div class="pmi-label">Category</div><div class="pmi-val">Motion Graphics</div></div>
+      <div class="proj-meta-item"><div class="pmi-label">Year</div><div class="pmi-val">2024</div></div>
+      <div class="proj-meta-item"><div class="pmi-label">Tools</div><div class="pmi-val">After Effects · Blender</div></div>
+    </div>
+  </div>
+  <div class="proj-hero-right"><canvas id="projCanvas"></canvas></div>
+</section>
+<div class="proj-content">
+  <p class="proj-section-label reveal">Overview</p>
+  <h2 class="proj-section-title reveal">The Concept</h2>
+  <p class="proj-text reveal">ECHOES is a <strong>short-form motion graphics piece</strong> built around a simple question: what does sound look like? The visual answer arrived in the form of concentric rings — expanding, overlapping, interfering with each other in the same way waves do in water.</p>
+  <p class="proj-text reveal">The piece was animated in <strong>After Effects with 3D layering in Blender</strong>. The design system drew from waveform analysis — shapes, timing and colour were all derived from the audio track itself rather than created independently of it.</p>
+</div>
+<section class="process-sec">
+  <p class="proj-section-label reveal">Process</p>
+  <h2 class="proj-section-title reveal">How it Came Together</h2>
+  <div class="process-grid">
+    <div class="process-step reveal"><div class="ps-num">01</div><div class="ps-title">Audio Analysis</div><div class="ps-desc">Started by studying the audio track's waveform, breaking it into frequency bands that would each drive a separate visual element.</div></div>
+    <div class="process-step reveal"><div class="ps-num">02</div><div class="ps-title">Motion Design</div><div class="ps-desc">Animated the ring expansion system in After Effects, using expressions to tie timing precisely to audio peaks and transients.</div></div>
+    <div class="process-step reveal"><div class="ps-num">03</div><div class="ps-title">3D & Composite</div><div class="ps-desc">Added depth with 3D ring elements rendered in Blender, then composited all layers in After Effects with colour grading.</div></div>
+  </div>
+</section>
+<div class="next-sec">
+  <div><div class="next-label">Next Project</div><div class="next-title">NEXORA</div></div>
+  <a href="/project-nexora" class="next-link">View Project ↗</a>
+</div>
+<footer>
+  <div><div class="ft-logo">KUSHAL.</div><div class="ft-copy">© 2026 Kushal. All Rights Reserved.</div></div>
+  <div class="ft-links"><a href="/work" class="ft-link">Work</a><a href="/creative-os" class="ft-link">Creative OS</a><a href="/about" class="ft-link">About</a><a href="/contact" class="ft-link">Contact</a></div>
+  <a href="#" class="back-top">↑ Top</a>
+</footer>
+<script>
+(function(){
+  const c=document.getElementById('projCanvas');if(!c)return;
+  function resize(){c.width=c.offsetWidth;c.height=c.offsetHeight||480;}
+  resize();window.addEventListener('resize',resize);
+  const ctx=c.getContext('2d');let t=0;
+  const rings=Array.from({length:8},(_,i)=>({r:0,maxR:50+i*45,speed:.4+i*.15,alpha:0,active:false,delay:i*18}));
+  let frame=0;
+  function draw(){
+    const w=c.width,h=c.height;ctx.clearRect(0,0,w,h);t+=.012;frame++;
+    const cx=w*.5,cy=h*.47;
+    // Ambient glow
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,h*.4);
+    g.addColorStop(0,'rgba(58,115,54,.1)');g.addColorStop(1,'transparent');
+    ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+    // Rings
+    rings.forEach((ring,i)=>{
+      if(frame>=ring.delay&&!ring.active){ring.active=true;ring.r=0;}
+      if(!ring.active)return;
+      ring.r+=ring.speed;ring.alpha=Math.max(0,1-ring.r/ring.maxR);
+      if(ring.r>ring.maxR){ring.r=0;ring.alpha=1;frame=frame%ring.delay||0;}
+      const col='78,158,73';
+      ctx.beginPath();ctx.arc(cx,cy,ring.r,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(${col},${ring.alpha*.6})`;ctx.lineWidth=1.5;ctx.stroke();
+    });
+    // Offset ring cluster
+    const ox=cx+Math.cos(t*.3)*h*.12,oy=cy+Math.sin(t*.4)*h*.08;
+    for(let k=3;k>=1;k--){ctx.beginPath();ctx.arc(ox,oy,k*h*.06,0,Math.PI*2);ctx.strokeStyle=`rgba(78,158,73,${k*.08})`;ctx.lineWidth=2;ctx.stroke();}
+    // Center glow
+    const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,h*.06);
+    cg.addColorStop(0,'rgba(78,158,73,.45)');cg.addColorStop(1,'transparent');
+    ctx.fillStyle=cg;ctx.beginPath();ctx.arc(cx,cy,h*.06,0,Math.PI*2);ctx.fill();
+    // Title
+    ctx.font=`700 ${w*.12}px "Bebas Neue",sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle='rgba(245,240,232,.25)';ctx.fillText('ECHOES',cx,cy+h*.38);
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+<script>
+</script>
+
+<script src="shared.js"></script>
+</body>
+</html>

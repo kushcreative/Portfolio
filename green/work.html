@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — Kushal</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
+<link rel="alternate icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f5f0e8;--bg2:#ece7dc;--bg3:#e4ddd0;--bg4:#ddd5c4;--text:#1a2318;--text2:#2d3d2b;--muted:#6b7a68;--muted2:#8a9986;--border:rgba(26,35,24,0.1);--border2:rgba(26,35,24,0.18);--green:#1e3d1c;--green2:#2a5628;--green3:#3a7336;--greenlight:#4e9e49;--cream:#f5f0e8;--gold:#a07840;--grad:linear-gradient(135deg,#1e3d1c,#3a7336);}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--green2);border-radius:2px;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(245,240,232,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--green);display:flex;align-items:center;gap:.5rem;text-decoration:none;}
+.nav-logo-dot{width:6px;height:6px;border-radius:50%;background:var(--green3);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
+.nav-links a{font-size:.75rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;background:var(--green3);transform:scaleX(0);transition:transform .25s;}
+.nav-links a:hover,.nav-links a.active{color:var(--green);}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--cream);padding:.55rem 1.3rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
+.nav-cta:hover{background:var(--green2);}
+
+
+
+
+/* PAGE HEADER */
+.page-header{padding:9rem 3rem 4rem 5rem;background:var(--green);position:relative;overflow:hidden;}
+.page-header::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(245,240,232,.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
+.ph-label{font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,232,.5);margin-bottom:.75rem;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,8vw,7rem);letter-spacing:.04em;color:var(--cream);line-height:.9;margin-bottom:1.5rem;}
+.ph-title span{color:rgba(245,240,232,.25);}
+.ph-desc{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:rgba(245,240,232,.6);max-width:500px;line-height:1.7;}
+.ph-num{position:absolute;right:5rem;bottom:3rem;font-family:'Bebas Neue',sans-serif;font-size:8rem;color:rgba(245,240,232,.04);letter-spacing:.05em;line-height:1;}
+
+/* FILTERS */
+.filter-bar{padding:1.5rem 3rem 1.5rem 5rem;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;}
+.filter-label{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);margin-right:.5rem;}
+.filter-btn{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1.1rem;border-radius:3px;border:1.5px solid var(--border2);color:var(--muted);background:transparent;cursor:pointer;transition:all .2s;font-family:'Space Grotesk',sans-serif;}
+.filter-btn:hover,.filter-btn.active{background:var(--green);color:var(--cream);border-color:var(--green);}
+
+/* WORK GRID */
+.work-sec{padding:3rem 3rem 5rem 5rem;}
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;}
+.proj-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;overflow:hidden;text-decoration:none;display:block;transition:border-color .3s,transform .3s;position:relative;}
+.proj-card:hover{border-color:var(--green3);transform:translateY(-4px);}
+.proj-thumb{aspect-ratio:16/9;position:relative;overflow:hidden;}
+.proj-canvas{width:100%;height:100%;display:block;transition:transform .5s cubic-bezier(.23,1,.32,1);}
+.proj-card:hover .proj-canvas{transform:scale(1.04);}
+.proj-body{padding:1.5rem 1.5rem 1.25rem;}
+.proj-meta{display:flex;gap:.75rem;align-items:center;margin-bottom:.75rem;}
+.proj-tag{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green3);background:rgba(58,115,54,.1);padding:.25rem .65rem;border-radius:2px;}
+.proj-year{font-size:.68rem;color:var(--muted2);margin-left:auto;}
+.proj-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.06em;color:var(--green);margin-bottom:.5rem;line-height:1.1;}
+.proj-desc{font-size:.84rem;line-height:1.7;color:var(--muted);font-weight:300;}
+.proj-arrow{position:absolute;top:1.25rem;right:1.25rem;width:36px;height:36px;background:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--cream);font-size:1rem;opacity:0;transition:opacity .3s;}
+.proj-card:hover .proj-arrow{opacity:1;}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3rem 2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.ft-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--green);}
+.ft-copy{font-size:.75rem;color:var(--muted);margin-top:.2rem;}
+.ft-links{display:flex;gap:2rem;}
+.ft-link{font-size:.72rem;color:var(--muted);text-decoration:none;letter-spacing:.08em;transition:color .2s;}
+.ft-link:hover{color:var(--green);}
+.back-top{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s;}
+.back-top:hover{color:var(--green);}
+.proj-card .btn-view-proj{background:var(--green);color:var(--cream);border:none;padding:.45rem .9rem;border-radius:3px;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
+.proj-card .btn-view-proj:hover{background:var(--green2);}
+.sec-label{font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--green3);margin-bottom:.75rem;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,5vw,4rem);letter-spacing:.04em;color:var(--green);margin-bottom:2.5rem;line-height:1.05;}
+.sec-title span{color:var(--green3);}
+@media(max-width:1024px){
+  .page-header{padding:8rem 1.5rem 3rem;}
+  .work-sec,.filter-bar{padding-left:1.5rem;padding-right:1.5rem;}
+  .projects-grid{grid-template-columns:1fr;}
+  nav{padding:1rem 1.5rem;}
+  
+  .ph-num{display:none;}
+}
+
+/* ═══════════════════════════════════════════════════
+   MOBILE NAVIGATION — shared fix (all pages)
+   ═══════════════════════════════════════════════════ */
+
+/* Hamburger button — hidden on desktop */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: .5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+  z-index: 210;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--green);
+  border-radius: 1px;
+  transition: transform .3s cubic-bezier(.23,1,.32,1), opacity .3s;
+  pointer-events: none;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Full-screen mobile overlay */
+.nav-mobile-menu {
+  display: flex;           /* always in flex — visibility controlled by opacity/pointer-events */
+  visibility: hidden;
+  position: fixed;
+  inset: 0;
+  z-index: 209;
+  background: rgba(245, 240, 232, .97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s cubic-bezier(.23,1,.32,1), visibility .35s;
+}
+.nav-mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+/* Close button inside overlay */
+.nav-mobile-close {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--border2, rgba(26,35,24,.18));
+  border-radius: 6px;
+  background: var(--bg2, #ece7dc);
+  color: var(--muted, #6b7a68);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.nav-mobile-close:hover {
+  border-color: var(--green3, #3a7336);
+  color: var(--green, #1e3d1c);
+  background: var(--bg3, #e4ddd0);
+}
+
+/* Nav links in overlay */
+.nav-mobile-menu a {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 10vw, 3.5rem);
+  letter-spacing: .08em;
+  color: var(--green, #1e3d1c);
+  text-decoration: none;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .35s, transform .35s, color .2s;
+}
+.nav-mobile-menu.open a { opacity: 1; transform: none; }
+.nav-mobile-menu.open a:nth-child(2) { transition-delay: .05s; }
+.nav-mobile-menu.open a:nth-child(3) { transition-delay: .10s; }
+.nav-mobile-menu.open a:nth-child(4) { transition-delay: .15s; }
+.nav-mobile-menu.open a:nth-child(5) { transition-delay: .20s; }
+.nav-mobile-menu.open a:nth-child(6) { transition-delay: .25s; }
+.nav-mobile-menu.open a:nth-child(7) { transition-delay: .30s; }
+.nav-mobile-menu a:hover { color: var(--green3, #3a7336); }
+.nav-mobile-menu .nav-mobile-cta {
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  color: var(--green3, #3a7336);
+  border: 1.5px solid var(--green3, #3a7336);
+  padding: .6rem 2rem;
+  border-radius: 4px;
+  letter-spacing: .1em;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.nav-mobile-menu .nav-mobile-cta:hover {
+  background: var(--green, #1e3d1c);
+  color: var(--cream, #f5f0e8);
+  border-color: var(--green, #1e3d1c);
+}
+
+/* ── RESPONSIVE: <768px ── */
+@media (max-width: 768px) {
+  /* Hide desktop nav elements */
+  .nav-links { display: none !important; }
+  .nav-cta   { display: none !important; }
+  .nav-back  { display: none !important; }  /* project pages */
+
+  /* Show hamburger */
+  .nav-hamburger { display: flex; }
+
+  /* Prevent body scroll when menu open */
+  body.nav-open { overflow: hidden; }
+
+  /* Ensure nav doesn't clip on small screens */
+  nav {
+    padding: 1rem 1.25rem !important;
+    flex-wrap: nowrap;
+    overflow: visible;
+  }
+}
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">KUSHAL.<div class="nav-logo-dot"></div></a>
+    <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/work" class="active">Work</a></li>
+    <li><a href="/creative-os">Creative OS</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+  <a href="/contact" class="nav-cta">Hire Me ↗</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<!-- MOBILE MENU OVERLAY -->
+<div class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-modal="true" aria-label="Navigation">
+  <button class="nav-mobile-close" id="navMobileClose" aria-label="Close navigation">✕</button>
+  <a href="/">Home</a>
+  <a href="/work">Work</a>
+  <a href="/creative-os">Creative OS</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+  <a href="/contact" class="nav-mobile-cta">Hire Me ↗</a>
+</div>
+
+
+<div class="page-header">
+  <p class="ph-label">Portfolio</p>
+  <h1 class="ph-title">Selected<br><span>Work</span></h1>
+  <p class="ph-desc">A collection of projects across branding, 3D art, graphic design and motion.</p>
+  <div class="ph-num">04</div>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="branding">Branding</button>
+  <button class="filter-btn" data-filter="3d">3D Art</button>
+  <button class="filter-btn" data-filter="motion">Motion</button>
+</div>
+
+<section class="work-sec">
+  <div class="projects-grid">
+    <div class="proj-card proj-card--modal reveal" data-cat="branding 3d">
+      <div class="proj-thumb">
+        <canvas class="proj-canvas" data-project="nexora"></canvas>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tag">Branding</span>
+          <span class="proj-tag">3D Art</span>
+          <span class="proj-year">2024</span>
+        </div>
+        <h2 class="proj-title">NEXORA</h2>
+        <p class="proj-desc">A complete brand identity system combining bold 3D typography with a futuristic visual language for a tech startup.</p>
+        <div class="proj-card-actions">
+          <button type="button" class="btn-process" data-case="nexora">Behind the Scenes ↗</button>
+          <a href="/project-nexora" class="btn-view-proj">View Project</a>
+        </div>
+      </div>
+    </div>
+    <div class="proj-card proj-card--modal reveal" data-cat="3d">
+      <div class="proj-thumb">
+        <canvas class="proj-canvas" data-project="chronex"></canvas>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tag">3D Art</span>
+          <span class="proj-tag">Product Render</span>
+          <span class="proj-year">2024</span>
+        </div>
+        <h2 class="proj-title">CHRONEX</h2>
+        <p class="proj-desc">A photorealistic 3D product render of a luxury watch, exploring material, lighting and cinematic composition.</p>
+        <div class="proj-card-actions">
+          <button type="button" class="btn-process" data-case="chronex">Behind the Scenes ↗</button>
+          <a href="/project-chronex" class="btn-view-proj">View Project</a>
+        </div>
+      </div>
+    </div>
+    <a href="/project-echoes" class="proj-card reveal" data-cat="motion">
+      <div class="proj-thumb">
+        <canvas class="proj-canvas" data-project="echoes"></canvas>
+        <div class="proj-arrow">↗</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-meta">
+          <span class="proj-tag">Motion Graphics</span>
+          <span class="proj-year">2024</span>
+        </div>
+        <h2 class="proj-title">ECHOES</h2>
+        <p class="proj-desc">A kinetic motion graphics piece exploring rhythm, concentric form and the visual language of sound.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- MOTION & CINEMATIC -->
+<section class="motion-sec" id="motion">
+  <div class="motion-header">
+    <div>
+      <p class="sec-label reveal">Motion & Animation</p>
+      <h2 class="sec-title reveal">Cinematic <span>Reels</span></h2>
+    </div>
+  </div>
+  <div class="motion-layout reveal">
+    <div class="motion-cinematic">
+      <div class="video-wrap video-wrap--169">
+        <span class="video-badge">4K · 16:9</span>
+        <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
+          data-lazy-src="assets/videos/showreel-cinematic-4k.mp4"
+          data-lazy-poster="assets/videos/showreel-cinematic-poster.jpg"
+          aria-label="Cinematic showreel"></video>
+        <div class="video-poster"><div class="video-play">▶</div></div>
+        <div class="video-meta"><div class="video-title">Showreel 2024</div><div class="video-tag">Motion · 3D</div></div>
+      </div>
+    </div>
+    <div class="motion-reels">
+      <div class="video-wrap video-wrap--916">
+        <span class="video-badge">4K · 9:16</span>
+        <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
+          data-lazy-src="assets/videos/chronex-reel-4k.mp4"
+          data-lazy-poster="assets/videos/chronex-reel-poster.jpg"
+          aria-label="CHRONEX reel"></video>
+        <div class="video-poster"><div class="video-play">▶</div></div>
+        <div class="video-meta"><div class="video-title">CHRONEX Reel</div><div class="video-tag">Product · 3D</div></div>
+      </div>
+      <div class="video-wrap video-wrap--916">
+        <span class="video-badge">4K · 9:16</span>
+        <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
+          data-lazy-src="assets/videos/echoes-motion-4k.mp4"
+          data-lazy-poster="assets/videos/echoes-motion-poster.jpg"
+          aria-label="ECHOES reel"></video>
+        <div class="video-poster"><div class="video-play">▶</div></div>
+        <div class="video-meta"><div class="video-title">ECHOES Motion</div><div class="video-tag">Motion Graphics</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRAPHIC DESIGN BRANDING GRID -->
+<section class="branding-sec" id="branding">
+  <p class="sec-label reveal">Graphic Design</p>
+  <h2 class="sec-title reveal">Real-World <span>Branding</span></h2>
+  <p class="reveal" style="font-size:.92rem;line-height:1.8;color:var(--muted);max-width:520px;font-weight:300;margin-top:-1.5rem;margin-bottom:.5rem;">High-fidelity mockups and physical brand applications — hover to explore each piece.</p>
+  <div class="branding-grid reveal">
+    <div class="branding-item branding-item--wide">
+      <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/business-card-4k.jpg" alt="NEXORA business card mockup" width="800" height="450">
+      <div class="branding-caption"><div class="bc-label">Stationery</div><div class="bc-title">Business Cards</div></div>
+    </div>
+    <div class="branding-item branding-item--tall">
+      <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/standee-4k.jpg" alt="Event standee mockup" width="600" height="800">
+      <div class="branding-caption"><div class="bc-label">Environmental</div><div class="bc-title">Event Standee</div></div>
+    </div>
+    <div class="branding-item branding-item--square">
+      <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/letterhead-4k.jpg" alt="Corporate letterhead mockup" width="600" height="600">
+      <div class="branding-caption"><div class="bc-label">Stationery</div><div class="bc-title">Letterhead</div></div>
+    </div>
+    <div class="branding-item branding-item--square">
+      <div class="mockup-placeholder lazy-shimmer">Social Template</div>
+      <div class="branding-caption"><div class="bc-label">Digital</div><div class="bc-title">Instagram Grid</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div><div class="ft-logo">KUSHAL.</div><div class="ft-copy">© 2026 Kushal. All Rights Reserved.</div></div>
+  <div class="ft-links"><a href="/work" class="ft-link">Work</a><a href="/creative-os" class="ft-link">Creative OS</a><a href="/about" class="ft-link">About</a><a href="/contact" class="ft-link">Contact</a></div>
+  <a href="#" class="back-top">↑ Back to Top</a>
+</footer>
+
+<script>
+// CURSOR
+document.querySelectorAll('a,button,.proj-card').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));});
+
+// FILTERS
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    document.querySelectorAll('.proj-card').forEach(card=>{
+      const cats=card.dataset.cat||'';
+      card.style.display=(f==='all'||cats.includes(f))?'block':'none';
+    });
+  });
+});
+
+// PROJECT CANVASES
+const palettes={
+  nexora:{bg:['#0d1a0d','#1a3318','#2a5628'],accent:'rgba(78,158,73,'},
+  chronex:{bg:['#0a0d1a','#141d33','#1e2d4a'],accent:'rgba(80,130,190,'},
+  echoes:{bg:['#120a1a','#211433','#321e4a'],accent:'rgba(140,80,200,'}
+};
+document.querySelectorAll('.proj-canvas').forEach(c=>{
+  const key=c.dataset.project;const pal=palettes[key]||palettes.nexora;
+  const draw=()=>{
+    c.width=c.offsetWidth||600;c.height=c.offsetHeight||340;
+    const ctx=c.getContext('2d'),w=c.width,h=c.height;
+    const bg=ctx.createLinearGradient(0,0,w,h);
+    bg.addColorStop(0,pal.bg[0]);bg.addColorStop(.5,pal.bg[1]);bg.addColorStop(1,pal.bg[2]);
+    ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+    for(let r=0;r<w;r+=20)for(let s=0;s<h;s+=20){ctx.beginPath();ctx.arc(r,s,0.8,0,Math.PI*2);ctx.fillStyle='rgba(245,240,232,.04)';ctx.fill();}
+    ctx.save();ctx.translate(w*.5,h*.5);
+    if(key==='nexora'){
+      const hex=(r,label)=>{ctx.beginPath();for(let k=0;k<6;k++){const a=k*Math.PI/3;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);}ctx.closePath();ctx.strokeStyle=pal.accent+'.35)';ctx.lineWidth=1.5;ctx.stroke();};
+      hex(h*.35);hex(h*.22);hex(h*.1);
+      ctx.font=`700 ${w*.1}px "Bebas Neue",sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(245,240,232,.3)';ctx.fillText('NEXORA',0,0);
+    } else if(key==='chronex'){
+      ctx.beginPath();ctx.arc(0,0,h*.28,0,Math.PI*2);ctx.strokeStyle=pal.accent+'.3)';ctx.lineWidth=2;ctx.stroke();
+      ctx.beginPath();ctx.arc(0,0,h*.2,0,Math.PI*2);ctx.strokeStyle=pal.accent+'.15)';ctx.lineWidth=1;ctx.stroke();
+      for(let k=0;k<12;k++){const a=k*Math.PI/6-Math.PI/2;ctx.beginPath();ctx.moveTo(Math.cos(a)*h*.2,Math.sin(a)*h*.2);ctx.lineTo(Math.cos(a)*h*.28,Math.sin(a)*h*.28);ctx.strokeStyle=k%3===0?pal.accent+'.6)':pal.accent+'.2)';ctx.lineWidth=k%3===0?2:1;ctx.stroke();}
+      ctx.font=`500 ${w*.055}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(245,240,232,.35)';ctx.fillText('CHRONEX',0,h*.08);
+    } else if(key==='echoes'){
+      for(let k=5;k>=1;k--){ctx.beginPath();ctx.arc(0,0,k*h*.07,0,Math.PI*2);ctx.strokeStyle=pal.accent+(0.04+k*.04)+')';ctx.lineWidth=1;ctx.stroke();}
+      ctx.beginPath();ctx.arc(h*.15,h*.1,h*.16,0,Math.PI*2);ctx.strokeStyle=pal.accent+'.25)';ctx.lineWidth=2;ctx.stroke();
+      ctx.font=`700 ${w*.1}px "Bebas Neue",sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='rgba(245,240,232,.3)';ctx.fillText('ECHOES',0,0);
+    }
+    ctx.restore();
+  };
+  setTimeout(draw,100);window.addEventListener('resize',draw);
+});
+
+// REVEAL handled by shared.js
+</script>
+<script src="shared.js"></script>
+<script>
+</script>
+
+</body>
+</html>

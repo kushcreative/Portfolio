@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative OS — Kushal</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
+<link rel="alternate icon" href="/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f5f0e8;--bg2:#ece7dc;--bg3:#e4ddd0;--bg4:#ddd5c4;
+  --text:#1a2318;--text2:#2d3d2b;--muted:#6b7a68;--muted2:#8a9986;
+  --border:rgba(26,35,24,0.1);--border2:rgba(26,35,24,0.18);
+  --green:#1e3d1c;--green2:#2a5628;--green3:#3a7336;--greenlight:#4e9e49;
+  --cream:#f5f0e8;--gold:#a07840;--gold2:#c8922a;--red:#8a2020;
+  --grad:linear-gradient(135deg,#1e3d1c,#3a7336);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--green2);border-radius:2px;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(245,240,232,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--green);display:flex;align-items:center;gap:.5rem;text-decoration:none;}
+.nav-logo-dot{width:6px;height:6px;border-radius:50%;background:var(--green3);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
+.nav-links a{font-size:.75rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;background:var(--green3);transform:scaleX(0);transition:transform .25s;}
+.nav-links a:hover,.nav-links a.active{color:var(--green);}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--cream);padding:.55rem 1.3rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
+.nav-cta:hover{background:var(--green2);}
+
+/* ── MOBILE NAV ── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.5rem;margin-left:auto;flex-shrink:0;z-index:210;}
+.nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--green);border-radius:1px;transition:transform .3s cubic-bezier(.23,1,.32,1),opacity .3s;pointer-events:none;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.nav-mobile-menu{display:flex;visibility:hidden;position:fixed;inset:0;z-index:209;background:rgba(245,240,232,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.23,1,.32,1),visibility .35s;}
+.nav-mobile-menu.open{opacity:1;visibility:visible;pointer-events:all;}
+.nav-mobile-close{position:absolute;top:1.4rem;right:1.4rem;width:40px;height:40px;border:1.5px solid var(--border2);border-radius:6px;background:var(--bg2);color:var(--muted);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;transition:border-color .2s,color .2s,background .2s;}
+.nav-mobile-close:hover{border-color:var(--green3);color:var(--green);background:var(--bg3);}
+.nav-mobile-menu a{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,10vw,3.5rem);letter-spacing:.08em;color:var(--green);text-decoration:none;line-height:1;opacity:0;transform:translateY(16px);transition:opacity .35s,transform .35s,color .2s;}
+.nav-mobile-menu.open a{opacity:1;transform:none;}
+.nav-mobile-menu.open a:nth-child(2){transition-delay:.05s;}
+.nav-mobile-menu.open a:nth-child(3){transition-delay:.10s;}
+.nav-mobile-menu.open a:nth-child(4){transition-delay:.15s;}
+.nav-mobile-menu.open a:nth-child(5){transition-delay:.20s;}
+.nav-mobile-menu.open a:nth-child(6){transition-delay:.25s;}
+.nav-mobile-menu.open a:nth-child(7){transition-delay:.30s;}
+.nav-mobile-menu a:hover{color:var(--green3);}
+.nav-mobile-menu .nav-mobile-cta{font-size:clamp(1.2rem,5vw,1.5rem);color:var(--green3);border:1.5px solid var(--green3);padding:.6rem 2rem;border-radius:4px;letter-spacing:.1em;transition:background .2s,color .2s,border-color .2s;}
+.nav-mobile-menu .nav-mobile-cta:hover{background:var(--green);color:var(--cream);border-color:var(--green);}
+@media(max-width:768px){
+  .nav-links{display:none!important;}
+  .nav-cta{display:none!important;}
+  .nav-hamburger{display:flex;}
+  body.nav-open{overflow:hidden;}
+  nav{padding:1rem 1.25rem!important;flex-wrap:nowrap;overflow:visible;}
+}
+
+/* ── PAGE HEADER ── */
+.page-header{
+  padding:9rem 3rem 5rem 5rem;
+  background:var(--green);
+  position:relative;overflow:hidden;
+}
+.page-header::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(245,240,232,.04) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;
+}
+.ph-label{font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,232,.4);margin-bottom:.75rem;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,9vw,8rem);letter-spacing:.04em;color:var(--cream);line-height:.9;margin-bottom:2rem;}
+.ph-desc{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:rgba(245,240,232,.6);max-width:520px;line-height:1.7;margin-bottom:2.5rem;}
+.ph-meta{display:flex;gap:2.5rem;flex-wrap:wrap;}
+.ph-meta-item{display:flex;flex-direction:column;gap:.25rem;}
+.ph-meta-label{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.35);}
+.ph-meta-val{font-size:.82rem;font-weight:500;color:rgba(245,240,232,.75);display:flex;align-items:center;gap:.4rem;}
+.ph-meta-dot{width:5px;height:5px;border-radius:50%;background:var(--greenlight);animation:pulse 2.5s infinite;flex-shrink:0;}
+.ph-ghost{position:absolute;right:5rem;bottom:2rem;font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,12vw,11rem);color:rgba(245,240,232,.03);letter-spacing:.05em;line-height:1;pointer-events:none;user-select:none;}
+
+/* ── SECTION SCAFFOLDING ── */
+.cos-sec{padding:5rem 3rem 5rem 5rem;border-top:1px solid var(--border);}
+.cos-sec--alt{background:var(--bg2);}
+.sec-eyebrow{font-size:.62rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--green3);margin-bottom:.6rem;}
+.sec-heading{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4.5vw,3.5rem);letter-spacing:.04em;color:var(--green);line-height:1.05;margin-bottom:2.5rem;}
+.sec-heading span{color:var(--green3);}
+
+/* ── STUDIO STATUS CARDS ── */
+.status-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.st-card{
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  padding:1.5rem 1.5rem 1.4rem;
+  position:relative;overflow:hidden;
+  transition:border-color .25s,transform .25s;
+}
+.st-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);opacity:0;transition:opacity .25s;}
+.st-card:hover{border-color:var(--green3);transform:translateY(-2px);}
+.st-card:hover::after{opacity:1;}
+.st-card-label{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem;}
+.st-card-label-dot{width:4px;height:4px;border-radius:50%;}
+.st-card-val{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.04em;color:var(--green);line-height:1.1;margin-bottom:.35rem;}
+.st-card-sub{font-size:.78rem;color:var(--muted);line-height:1.5;}
+.st-card-badge{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.2rem .55rem;border-radius:2px;margin-top:.6rem;
+}
+.badge-green{background:rgba(78,158,73,.12);color:var(--green3);}
+.badge-gold{background:rgba(160,120,64,.12);color:var(--gold);}
+.badge-muted{background:rgba(107,122,104,.1);color:var(--muted);}
+
+/* ── PROJECT CONTROL ── */
+.proj-control-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:2.5rem;}
+.pc-card{
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  padding:1.5rem;text-align:center;
+}
+.pc-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;letter-spacing:.04em;color:var(--green);line-height:1;}
+.pc-label{font-size:.65rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);margin-top:.3rem;}
+.proj-list{display:flex;flex-direction:column;gap:.75rem;}
+.proj-row{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 1.25rem;background:var(--bg);
+  border:1px solid var(--border);border-radius:4px;
+  transition:border-color .2s;
+}
+.proj-row:hover{border-color:var(--green3);}
+.proj-row-name{font-size:.88rem;font-weight:600;color:var(--green);flex:1;}
+.proj-row-type{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);}
+.proj-progress-bar{flex:0 0 120px;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.proj-progress-fill{height:100%;border-radius:2px;background:var(--grad);transition:width 1s cubic-bezier(.23,1,.32,1);}
+.proj-status{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;border-radius:2px;}
+.ps-active{background:rgba(78,158,73,.12);color:var(--green3);}
+.ps-complete{background:rgba(107,122,104,.1);color:var(--muted);}
+.ps-hold{background:rgba(160,120,64,.12);color:var(--gold);}
+
+/* ── LEARNING TRACKER ── */
+.learn-list{display:flex;flex-direction:column;gap:1.5rem;}
+.learn-item{}
+.learn-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem;}
+.learn-name{font-size:.88rem;font-weight:600;color:var(--green);}
+.learn-pct{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.04em;color:var(--green3);}
+.learn-track{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.learn-fill{height:100%;border-radius:3px;background:var(--grad);transition:width 1.2s cubic-bezier(.23,1,.32,1);}
+.learn-note{font-size:.68rem;color:var(--muted2);margin-top:.35rem;}
+.learn-cols{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+
+/* ── STUDIO SETUP ── */
+.setup-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.setup-card{
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  padding:1.5rem;transition:border-color .25s,transform .25s;
+}
+.setup-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+.setup-icon{font-size:1.4rem;margin-bottom:.85rem;display:block;}
+.setup-cat{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);margin-bottom:.4rem;}
+.setup-name{font-size:.95rem;font-weight:600;color:var(--green);margin-bottom:.35rem;}
+.setup-detail{font-size:.78rem;color:var(--muted);line-height:1.6;}
+
+/* ── EXPERIMENT LAB ── */
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.exp-card{
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  padding:1.75rem 1.5rem;position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s;
+}
+.exp-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:100%;
+  background:linear-gradient(160deg,rgba(78,158,73,.03) 0%,transparent 60%);
+  pointer-events:none;
+}
+.exp-card:hover{border-color:var(--green3);transform:translateY(-3px);}
+.exp-num{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.04em;color:rgba(26,35,24,.06);line-height:1;margin-bottom:.5rem;}
+.exp-title{font-size:.95rem;font-weight:600;color:var(--green);margin-bottom:.5rem;}
+.exp-desc{font-size:.78rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
+.exp-status-bar{display:flex;gap:.5rem;flex-wrap:wrap;}
+.exp-tag{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;border-radius:2px;}
+.et-active{background:rgba(78,158,73,.1);color:var(--green3);}
+.et-concept{background:rgba(160,120,64,.1);color:var(--gold);}
+.et-archive{background:rgba(107,122,104,.09);color:var(--muted);}
+.et-testing{background:rgba(26,35,24,.08);color:var(--text2);}
+
+/* ── CREATIVE NOTES ── */
+.notes-area{
+  max-width:760px;
+  margin:0 auto;
+}
+.note-block{
+  border-left:2px solid var(--border2);
+  padding:.75rem 0 .75rem 1.75rem;
+  margin-bottom:2rem;
+  position:relative;
+}
+.note-block::before{
+  content:'';position:absolute;left:-4px;top:.8rem;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green3);
+}
+.note-category{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);margin-bottom:.4rem;}
+.note-text{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--text2);line-height:1.75;}
+.note-date{font-size:.65rem;color:var(--muted2);margin-top:.45rem;}
+.notes-sig{
+  text-align:right;margin-top:2.5rem;
+  font-family:'Cormorant Garamond',serif;font-size:.9rem;font-style:italic;color:var(--muted);
+}
+
+/* ── SECRET ACCESS ── */
+.secret-zone{
+  padding:2rem 5rem;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:flex-end;
+  background:var(--bg);
+}
+.secret-link{
+  font-size:.58rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted2);
+  text-decoration:none;opacity:.45;
+  transition:opacity .3s,color .3s;
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.secret-link:hover{opacity:1;color:var(--green);}
+.secret-link::before{content:'◈';font-size:.5rem;}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3rem 2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.ft-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:var(--green);}
+.ft-copy{font-size:.75rem;color:var(--muted);margin-top:.2rem;}
+.ft-links{display:flex;gap:2rem;}
+.ft-link{font-size:.72rem;color:var(--muted);text-decoration:none;letter-spacing:.08em;transition:color .2s;}
+.ft-link:hover{color:var(--green);}
+.back-top{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s;}
+.back-top:hover{color:var(--green);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .status-cards,.setup-grid,.exp-grid{grid-template-columns:repeat(2,1fr);}
+  .proj-control-grid{grid-template-columns:repeat(2,1fr);}
+  .learn-cols{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  .page-header{padding:7rem 1.5rem 3.5rem;}
+  .cos-sec{padding:3.5rem 1.5rem;}
+  .status-cards,.setup-grid,.exp-grid{grid-template-columns:1fr;}
+  .proj-control-grid{grid-template-columns:repeat(2,1fr);}
+  .ph-meta{gap:1.5rem;}
+  .secret-zone{padding:1.75rem 1.5rem;}
+  footer{padding:2rem 1.5rem;}
+  .ph-ghost{display:none;}
+}
+@media(max-width:480px){
+  .proj-control-grid{grid-template-columns:1fr 1fr;}
+  .proj-progress-bar{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">KUSHAL.<div class="nav-logo-dot"></div></a>
+    <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/work">Work</a></li>
+    <li><a href="/creative-os" class="active">Creative OS</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+  <a href="/contact" class="nav-cta">Hire Me ↗</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-modal="true" aria-label="Navigation">
+  <button class="nav-mobile-close" id="navMobileClose" aria-label="Close navigation">✕</button>
+  <a href="/">Home</a>
+  <a href="/work">Work</a>
+  <a href="/creative-os">Creative OS</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+  <a href="/contact" class="nav-mobile-cta">Hire Me ↗</a>
+</div>
+
+<!-- ── HERO ── -->
+<header class="page-header">
+  <p class="ph-label">Studio System · Private Access</p>
+  <h1 class="ph-title">CREATIVE<br>OS</h1>
+  <p class="ph-desc">A private creative operating system documenting projects, experiments, learning, workflow and studio progress.</p>
+  <div class="ph-meta">
+    <div class="ph-meta-item">
+      <span class="ph-meta-label">Status</span>
+      <span class="ph-meta-val"><span class="ph-meta-dot"></span>Active &amp; Building</span>
+    </div>
+    <div class="ph-meta-item">
+      <span class="ph-meta-label">Local Time</span>
+      <span class="ph-meta-val" id="heroTime">—</span>
+    </div>
+    <div class="ph-meta-item">
+      <span class="ph-meta-label">Location</span>
+      <span class="ph-meta-val">India · IST</span>
+    </div>
+    <div class="ph-meta-item">
+      <span class="ph-meta-label">Availability</span>
+      <span class="ph-meta-val">Open to Projects</span>
+    </div>
+  </div>
+  <div class="ph-ghost">OS</div>
+</header>
+
+<!-- ── SECTION 01 — STUDIO STATUS ── -->
+<section class="cos-sec reveal">
+  <p class="sec-eyebrow">Section 01</p>
+  <h2 class="sec-heading">Studio <span>Status</span></h2>
+  <div class="status-cards">
+    <div class="st-card">
+      <div class="st-card-label"><div class="st-card-label-dot" style="background:var(--greenlight);"></div>Current Focus</div>
+      <div class="st-card-val">Brand Systems</div>
+      <div class="st-card-sub">3D render pipelines, identity design and motion — building a tighter workflow between Blender and After Effects.</div>
+      <div class="st-card-badge badge-green">● Active</div>
+    </div>
+    <div class="st-card">
+      <div class="st-card-label"><div class="st-card-label-dot" style="background:var(--green3);"></div>Current Project</div>
+      <div class="st-card-val">NEXORA</div>
+      <div class="st-card-sub">Full brand identity — logo, 3D assets, guidelines and motion reveal. Round 2 of hero renders in progress.</div>
+      <div class="st-card-badge badge-green">In Progress</div>
+    </div>
+    <div class="st-card">
+      <div class="st-card-label"><div class="st-card-label-dot" style="background:var(--greenlight);"></div>Availability</div>
+      <div class="st-card-val">Open</div>
+      <div class="st-card-sub">Accepting new briefs for branding, 3D art, motion and creative direction. 1–2 week response window.</div>
+      <div class="st-card-badge badge-green">Available Now</div>
+    </div>
+    <div class="st-card">
+      <div class="st-card-label"><div class="st-card-label-dot" style="background:var(--gold);"></div>Response Time</div>
+      <div class="st-card-val">24–48h</div>
+      <div class="st-card-sub">All enquiries replied to within 24–48 hours. Urgent briefs considered on request.</div>
+      <div class="st-card-badge badge-gold">Weekdays</div>
+    </div>
+    <div class="st-card">
+      <div class="st-card-label"><div class="st-card-label-dot" style="background:var(--green2);"></div>Learning Goal</div>
+      <div class="st-card-val">Maya + Nuke</div>
+      <div class="st-card-sub">Building hard-surface modelling fundamentals in Maya (Revolve, Loft, Birail, Multi-Cut) alongside node-based compositing in Nuke.</div>
+      <div class="st-card-badge badge-muted">Self-Study</div>
+    </div>
+    <div class="st-card">
+      <div class="st-card-label"><div class="st-card-label-dot" style="background:var(--muted2);"></div>Studio Mode</div>
+      <div class="st-card-val">Deep Work</div>
+      <div class="st-card-sub">Currently in focused project delivery mode. Checking messages at 9am and 5pm IST daily.</div>
+      <div class="st-card-badge badge-muted">Async-Friendly</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 02 — PROJECT CONTROL ── -->
+<section class="cos-sec cos-sec--alt reveal">
+  <p class="sec-eyebrow">Section 02</p>
+  <h2 class="sec-heading">Project <span>Control</span></h2>
+  <div class="proj-control-grid">
+    <div class="pc-card">
+      <div class="pc-num">02</div>
+      <div class="pc-label">Active Projects</div>
+    </div>
+    <div class="pc-card">
+      <div class="pc-num">08</div>
+      <div class="pc-label">Completed Projects</div>
+    </div>
+    <div class="pc-card">
+      <div class="pc-num">01</div>
+      <div class="pc-label">In Progress</div>
+    </div>
+    <div class="pc-card">
+      <div class="pc-num">03</div>
+      <div class="pc-label">Recent Deliveries</div>
+    </div>
+  </div>
+  <div class="proj-list">
+    <div class="proj-row">
+      <div class="proj-row-name">NEXORA — Brand Identity</div>
+      <div class="proj-row-type">Branding · 3D</div>
+      <div class="proj-progress-bar"><div class="proj-progress-fill" style="width:75%"></div></div>
+      <div class="proj-status ps-active">Active</div>
+    </div>
+    <div class="proj-row">
+      <div class="proj-row-name">CHRONEX — Watch Renders</div>
+      <div class="proj-row-type">3D Art · Product</div>
+      <div class="proj-progress-bar"><div class="proj-progress-fill" style="width:100%"></div></div>
+      <div class="proj-status ps-complete">Delivered</div>
+    </div>
+    <div class="proj-row">
+      <div class="proj-row-name">ECHOES — Motion Piece</div>
+      <div class="proj-row-type">Motion · AE</div>
+      <div class="proj-progress-bar"><div class="proj-progress-fill" style="width:100%"></div></div>
+      <div class="proj-status ps-complete">Published</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 03 — LEARNING TRACKER ── -->
+<section class="cos-sec reveal">
+  <p class="sec-eyebrow">Section 03</p>
+  <h2 class="sec-heading">Learning <span>Tracker</span></h2>
+  <p class="skill-stage-legend">Learning → Practicing → Building Projects → Improving</p>
+  <div class="learn-cols">
+    <div class="learn-list">
+      <div class="learn-item skill-item--stage">
+        <div class="skill-name-row"><span class="learn-name">Blender</span><span class="stage-tag stage-practicing">Practicing</span></div>
+        <div class="learn-note">Modelling, shading, Cycles rendering, camera animation — next: geometry nodes.</div>
+      </div>
+      <div class="learn-item skill-item--stage">
+        <div class="skill-name-row"><span class="learn-name">Autodesk Maya</span><span class="stage-tag stage-learning">Learning</span></div>
+        <div class="learn-note">Fundamentals — Revolve, Loft, Birail, Bevel Plus, Multi-Cut, edge shaping and topology for hard-surface, high-poly modelling.</div>
+      </div>
+      <div class="learn-item skill-item--stage">
+        <div class="skill-name-row"><span class="learn-name">After Effects</span><span class="stage-tag stage-practicing">Practicing</span></div>
+        <div class="learn-note">Motion graphics, text animation, expressions — studying kinetic typography.</div>
+      </div>
+      <div class="learn-item skill-item--stage">
+        <div class="skill-name-row"><span class="learn-name">Nuke</span><span class="stage-tag stage-learning">Learning</span></div>
+        <div class="learn-note">Early stage — node-based compositing, keying basics, CGI integration.</div>
+      </div>
+    </div>
+    <div class="learn-list">
+      <div class="learn-item skill-item--stage">
+        <div class="skill-name-row"><span class="learn-name">Web Development</span><span class="stage-tag stage-building">Building Projects</span></div>
+        <div class="learn-note">HTML, CSS, vanilla JS — portfolio sites, interactive presentations, creative experiments.</div>
+      </div>
+      <div class="learn-item skill-item--stage">
+        <div class="skill-name-row"><span class="learn-name">Brand Identity</span><span class="stage-tag stage-improving">Improving</span></div>
+        <div class="learn-note">Logo systems, brand guidelines, visual language — studying Swiss typographic traditions.</div>
+      </div>
+      <div class="learn-item skill-item--stage">
+        <div class="skill-name-row"><span class="learn-name">3D Sculpting</span><span class="stage-tag stage-learning">Learning</span></div>
+        <div class="learn-note">Organic forms, character assets, texture baking — early development phase.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 04 — STUDIO SETUP ── -->
+<section class="cos-sec cos-sec--alt reveal">
+  <p class="sec-eyebrow">Section 04</p>
+  <h2 class="sec-heading">Studio <span>Setup</span></h2>
+  <div class="setup-grid">
+    <div class="setup-card">
+      <span class="setup-icon">⬛</span>
+      <div class="setup-cat">Workstation</div>
+      <div class="setup-name">Current PC Rig</div>
+      <div class="setup-detail">Intel Core i7-14700K · RTX 5070 Ti · 32GB DDR5 RAM · Samsung 990 Pro NVMe SSD · MSI Z790 Gaming Plus WiFi · Corsair RM850 80+ Gold · DeepCool LT520 · Corsair 4000D Airflow. Planned future workstation for high-poly modelling, rendering, VFX and motion graphics.</div>
+    </div>
+    <div class="setup-card">
+      <span class="setup-icon">⬜</span>
+      <div class="setup-cat">Monitor</div>
+      <div class="setup-name">Lenovo Legion 27Q-10</div>
+      <div class="setup-detail">3840×2160 · 99% sRGB / 90% DCI-P3 · Response 0.5ms MPRT · USB-C hub — primary display for design and colour work.</div>
+    </div>
+    <div class="setup-card">
+      <span class="setup-icon">◈</span>
+      <div class="setup-cat">Software Stack</div>
+      <div class="setup-name">Creative Suite</div>
+      <div class="setup-detail">Blender · After Effects · Photoshop · Illustrator · InDesign · Figma · DaVinci Resolve · VS Code.</div>
+    </div>
+    <div class="setup-card">
+      <span class="setup-icon">◇</span>
+      <div class="setup-cat">Creative Tools</div>
+      <div class="setup-name">XP Pen V3</div>
+      <div class="setup-detail">Medium tablet — used for sculpting, photo retouching, hand-drawn typography sketches and pressure-sensitive brushwork.</div>
+    </div>
+    <div class="setup-card">
+      <span class="setup-icon">○</span>
+      <div class="setup-cat">Camera Gear</div>
+      <div class="setup-name">Sony ZV-E10</div>
+      <div class="setup-detail">APS-C mirrorless camera — used for product photography, 3D reference capture, behind-the-scenes content and creative video work.</div>
+    </div>
+    <div class="setup-card">
+      <span class="setup-icon">▲</span>
+      <div class="setup-cat">Audio</div>
+      <div class="setup-name">Sony WH-1000XM5</div>
+      <div class="setup-detail">Studio reference headphones — critical listening for motion and video work. Paired with Focusrite Scarlett 2i2 interface.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 05 — EXPERIMENT LAB ── -->
+<section class="cos-sec reveal">
+  <p class="sec-eyebrow">Section 05</p>
+  <h2 class="sec-heading">Experiment <span>Lab</span></h2>
+  <div class="exp-grid">
+    <div class="exp-card">
+      <div class="exp-num">01</div>
+      <div class="exp-title">Typography Systems</div>
+      <div class="exp-desc">Exploring modular type systems where scale, weight, and spacing encode information hierarchy — not decoration. Testing across editorial and UI contexts.</div>
+      <div class="exp-status-bar">
+        <span class="exp-tag et-active">Active</span>
+        <span class="exp-tag et-testing">Ongoing</span>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">02</div>
+      <div class="exp-title">Motion Tests</div>
+      <div class="exp-desc">Short-form motion experiments in After Effects and Blender. Studying easing curves, anticipation, and the point at which motion becomes language rather than decoration.</div>
+      <div class="exp-status-bar">
+        <span class="exp-tag et-active">Active</span>
+        <span class="exp-tag et-concept">Exploratory</span>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">03</div>
+      <div class="exp-title">Brand Concepts</div>
+      <div class="exp-desc">Self-initiated brand identities for fictional companies — a way to experiment without client constraints. Five complete brand systems built so far in 2025.</div>
+      <div class="exp-status-bar">
+        <span class="exp-tag et-active">5 Built</span>
+        <span class="exp-tag et-testing">Unseen</span>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">04</div>
+      <div class="exp-title">3D Experiments</div>
+      <div class="exp-desc">Abstract geometry, procedural materials and render farm tests. These explore what's possible before being applied to real client work — Blender Cycles and EEVEE.</div>
+      <div class="exp-status-bar">
+        <span class="exp-tag et-concept">Concept</span>
+        <span class="exp-tag et-testing">Renders Only</span>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">05</div>
+      <div class="exp-title">Web Interactions</div>
+      <div class="exp-desc">Vanilla JS experiments — scroll-driven reveals, canvas animations, cursor effects. Testing the boundary between graphic design and coded interaction.</div>
+      <div class="exp-status-bar">
+        <span class="exp-tag et-active">Active</span>
+        <span class="exp-tag et-concept">Prototyping</span>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">06</div>
+      <div class="exp-title">Archival Work</div>
+      <div class="exp-desc">Old concepts, abandoned directions and failed experiments — kept as reference. Everything that didn't make the portfolio taught something the portfolio work relied on.</div>
+      <div class="exp-status-bar">
+        <span class="exp-tag et-archive">Archived</span>
+        <a href="/lab" class="exp-tag et-concept" style="text-decoration:none;cursor:pointer;">View Lab →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 06 — CREATIVE NOTES ── -->
+<section class="cos-sec cos-sec--alt reveal">
+  <p class="sec-eyebrow">Section 06</p>
+  <h2 class="sec-heading">Creative <span>Notes</span></h2>
+  <div class="notes-area">
+
+    <div class="note-block">
+      <div class="note-category">Observation</div>
+      <p class="note-text">"The work that looks effortless took the most effort. The constraints that felt limiting were the ones that shaped the strongest ideas."</p>
+      <div class="note-date">June 2025</div>
+    </div>
+
+    <div class="note-block">
+      <div class="note-category">Thought</div>
+      <p class="note-text">Stop explaining the concept. If the visual doesn't communicate it on its own, the concept isn't finished — write less, design more.</p>
+      <div class="note-date">May 2025</div>
+    </div>
+
+    <div class="note-block">
+      <div class="note-category">Creative Principle</div>
+      <p class="note-text">Every project has one decision that determines everything else. Find it early. The rest is craft.</p>
+      <div class="note-date">May 2025</div>
+    </div>
+
+    <div class="note-block">
+      <div class="note-category">Idea</div>
+      <p class="note-text">Build a brand identity for a luxury silence — no product, no service. Just the concept of absence as premium. Would be an interesting constraint exercise.</p>
+      <div class="note-date">April 2025</div>
+    </div>
+
+    <div class="note-block">
+      <div class="note-category">Observation</div>
+      <p class="note-text">The best 3D work this year uses render as a starting point, not an end. Colour grading in post is where the mood gets made.</p>
+      <div class="note-date">April 2025</div>
+    </div>
+
+    <div class="note-block">
+      <div class="note-category">Creative Principle</div>
+      <p class="note-text">Reference broadly, steal nothing. The goal is to understand why something works, then make the same decision from first principles.</p>
+      <div class="note-date">March 2025</div>
+    </div>
+
+    <div class="notes-sig">— K. Studio, 2025</div>
+  </div>
+</section>
+
+<!-- ── SECTION 07 — SECRET ACCESS ── -->
+<div class="secret-zone">
+  <a href="/lab" class="secret-link">LAB_01</a>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>
+    <div class="ft-logo">KUSHAL.</div>
+    <div class="ft-copy">© 2026 Kushal. All Rights Reserved.</div>
+  </div>
+  <div class="ft-links">
+    <a href="/work" class="ft-link">Work</a>
+    <a href="/creative-os" class="ft-link">Creative OS</a>
+    <a href="/about" class="ft-link">About</a>
+    <a href="/contact" class="ft-link">Contact</a>
+  </div>
+  <a href="#" class="back-top">↑ Back to Top</a>
+</footer>
+
+<script>
+/* ── LIVE CLOCK ── */
+(function(){
+  function tick(){
+    var now=new Date();
+    var h=String(now.getHours()).padStart(2,'0');
+    var m=String(now.getMinutes()).padStart(2,'0');
+    var s=String(now.getSeconds()).padStart(2,'0');
+    var el=document.getElementById('heroTime');
+    if(el) el.textContent=h+':'+m+':'+s;
+  }
+  setInterval(tick,1000);
+  tick();
+})();
+
+/* ── PROGRESS BAR ANIMATE ── */
+document.addEventListener('DOMContentLoaded',function(){
+  var fills=document.querySelectorAll('.proj-progress-fill');
+  fills.forEach(function(el){
+    var w=el.style.width;
+    el.style.width='0';
+    setTimeout(function(){ el.style.width=w; },300);
+  });
+});
+
+/* Mobile nav toggle now lives in shared.js (initHamburgerNav) — no per-page duplicate needed */
+</script>
+<script src="shared.js"></script>
+</body>
+</html>
