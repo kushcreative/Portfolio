@@ -1,0 +1,181 @@
+:root.portal-active,
+:root.portal-active body {
+  overflow: hidden;
+}
+
+.portal-landing {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100vh;
+  background: #080a08;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .45s ease, visibility .45s ease;
+}
+
+:root.portal-ready .portal-landing {
+  opacity: 1;
+  visibility: visible;
+}
+
+.portal-landing.is-reversed {
+  flex-direction: row-reverse;
+}
+
+.portal-landing.is-exiting {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.portal-half {
+  position: relative;
+  flex: 0 0 50%;
+  width: 50%;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+  text-decoration: none;
+}
+
+.portal-half::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: .35;
+  background-image:
+    linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.portal-half::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.portal-half:hover::after,
+.portal-half:focus-visible::after {
+  opacity: 1;
+}
+
+.portal-green {
+  color: #f3f0e7;
+  background: #07140d;
+  border-right: 1px solid rgba(198,229,184,.25);
+}
+
+.portal-landing.is-reversed .portal-green {
+  border-right: 0;
+  border-left: 1px solid rgba(198,229,184,.25);
+}
+
+.portal-green::after {
+  background: radial-gradient(circle at 50% 50%, rgba(73,158,84,.2), transparent 58%);
+}
+
+.portal-tva {
+  color: #e2d5bc;
+  background: #0a0a08;
+}
+
+.portal-tva::after {
+  background: radial-gradient(circle at 50% 50%, rgba(212,113,43,.22), transparent 58%);
+}
+
+.portal-index {
+  position: absolute;
+  top: clamp(18px, 3vw, 38px);
+  left: clamp(16px, 3vw, 38px);
+  font: 600 clamp(8px, .75vw, 11px)/1.4 "Space Grotesk", sans-serif;
+  letter-spacing: .18em;
+  color: rgba(255,255,255,.54);
+}
+
+.portal-green-brand {
+  margin-bottom: clamp(24px, 4vw, 54px);
+  color: #f3f0e7;
+  font: 700 clamp(18px, 2.2vw, 34px)/1 "Space Grotesk", sans-serif;
+  letter-spacing: -.04em;
+}
+
+.portal-green-brand span {
+  color: #4f9e52;
+}
+
+.portal-tva-brand {
+  width: min(46%, 280px);
+  margin-bottom: clamp(24px, 4vw, 54px);
+}
+
+.portal-title {
+  color: inherit;
+  font: 400 clamp(58px, 10vw, 176px)/.78 "Bebas Neue", "Arial Narrow", sans-serif;
+  letter-spacing: -.025em;
+  transition: transform .35s ease, letter-spacing .35s ease;
+}
+
+.portal-half:hover .portal-title,
+.portal-half:focus-visible .portal-title {
+  transform: translateY(-4px);
+  letter-spacing: .01em;
+}
+
+.portal-green .portal-title {
+  text-shadow: 0 0 50px rgba(78,158,73,.16);
+}
+
+.portal-tva .portal-title {
+  color: #d4712b;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-weight: 600;
+}
+
+.portal-meta {
+  position: absolute;
+  bottom: clamp(20px, 3vw, 40px);
+  color: rgba(255,255,255,.62);
+  font: 600 clamp(8px, .75vw, 11px)/1.4 "Space Grotesk", sans-serif;
+  letter-spacing: .16em;
+}
+
+.portal-tva .portal-meta {
+  color: #a99c85;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.portal-half:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -5px;
+}
+
+@media (max-width: 640px) {
+  .portal-half::before { background-size: 26px 26px; }
+  .portal-index { top: 17px; left: 12px; writing-mode: vertical-rl; }
+  .portal-green-brand { font-size: clamp(13px, 4vw, 19px); }
+  .portal-tva-brand { width: min(72%, 170px); }
+  .portal-title { font-size: clamp(48px, 18vw, 82px); writing-mode: vertical-rl; transform: rotate(180deg); }
+  .portal-half:hover .portal-title,
+  .portal-half:focus-visible .portal-title { transform: rotate(180deg) translateY(-3px); }
+  .portal-meta { bottom: 18px; max-width: 72%; text-align: center; font-size: 7px; line-height: 1.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-landing,
+  .portal-half::after,
+  .portal-title { transition-duration: .01ms; }
+}
