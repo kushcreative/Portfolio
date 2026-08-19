@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/tva", "destination": "/tva/index.html" },
+    { "source": "/tva/work", "destination": "/tva/work.html" },
+    { "source": "/tva/creative-os", "destination": "/tva/creative-os.html" },
+    { "source": "/tva/about", "destination": "/tva/about.html" },
+    { "source": "/tva/contact", "destination": "/tva/contact.html" },
+    { "source": "/tva/project-nexora", "destination": "/tva/project-nexora.html" },
+    { "source": "/tva/project-chronex", "destination": "/tva/project-chronex.html" },
+    { "source": "/tva/project-echoes", "destination": "/tva/project-echoes.html" },
+    { "source": "/tva/project-poster", "destination": "/tva/project-poster.html" },
+
+    { "source": "/green", "destination": "/green/index.html" },
+    { "source": "/green/work", "destination": "/green/work.html" },
+    { "source": "/green/creative-os", "destination": "/green/creative-os.html" },
+    { "source": "/green/about", "destination": "/green/about.html" },
+    { "source": "/green/contact", "destination": "/green/contact.html" },
+    { "source": "/green/lab", "destination": "/green/lab.html" },
+    { "source": "/green/project-nexora", "destination": "/green/project-nexora.html" },
+    { "source": "/green/project-chronex", "destination": "/green/project-chronex.html" },
+    { "source": "/green/project-echoes", "destination": "/green/project-echoes.html" },
+    { "source": "/green/project-poster", "destination": "/green/project-poster.html" }
+  ]
+}
