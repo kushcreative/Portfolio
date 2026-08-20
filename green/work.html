@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" sizes="64x64" href="/green/favicon-64.png">
 <link rel="alternate icon" href="/green/favicon.ico">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="/green/shared.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{--bg:#f5f0e8;--bg2:#ece7dc;--bg3:#e4ddd0;--bg4:#ddd5c4;--text:#1a2318;--text2:#2d3d2b;--muted:#6b7a68;--muted2:#8a9986;--border:rgba(26,35,24,0.1);--border2:rgba(26,35,24,0.18);--green:#1e3d1c;--green2:#2a5628;--green3:#3a7336;--greenlight:#4e9e49;--cream:#f5f0e8;--gold:#a07840;--grad:linear-gradient(135deg,#1e3d1c,#3a7336);}
@@ -333,8 +333,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3
       <div class="video-wrap video-wrap--169">
         <span class="video-badge">4K · 16:9</span>
         <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
-          data-lazy-src="assets/videos/showreel-cinematic-4k.mp4"
-          data-lazy-poster="assets/videos/showreel-cinematic-poster.jpg"
           aria-label="Cinematic showreel"></video>
         <div class="video-poster"><div class="video-play">▶</div></div>
         <div class="video-meta"><div class="video-title">Showreel 2024</div><div class="video-tag">Motion · 3D</div></div>
@@ -344,8 +342,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3
       <div class="video-wrap video-wrap--916">
         <span class="video-badge">4K · 9:16</span>
         <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
-          data-lazy-src="assets/videos/chronex-reel-4k.mp4"
-          data-lazy-poster="assets/videos/chronex-reel-poster.jpg"
           aria-label="CHRONEX reel"></video>
         <div class="video-poster"><div class="video-play">▶</div></div>
         <div class="video-meta"><div class="video-title">CHRONEX Reel</div><div class="video-tag">Product · 3D</div></div>
@@ -353,8 +349,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3
       <div class="video-wrap video-wrap--916">
         <span class="video-badge">4K · 9:16</span>
         <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
-          data-lazy-src="assets/videos/echoes-motion-4k.mp4"
-          data-lazy-poster="assets/videos/echoes-motion-poster.jpg"
           aria-label="ECHOES reel"></video>
         <div class="video-poster"><div class="video-play">▶</div></div>
         <div class="video-meta"><div class="video-title">ECHOES Motion</div><div class="video-tag">Motion Graphics</div></div>
@@ -370,15 +364,15 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 3
   <p class="reveal" style="font-size:.92rem;line-height:1.8;color:var(--muted);max-width:520px;font-weight:300;margin-top:-1.5rem;margin-bottom:.5rem;">High-fidelity mockups and physical brand applications — hover to explore each piece.</p>
   <div class="branding-grid reveal">
     <div class="branding-item branding-item--wide">
-      <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/business-card-4k.jpg" alt="NEXORA business card mockup" width="800" height="450">
+      <div class="mockup-placeholder lazy-shimmer">Business Card — 4K Mockup</div>
       <div class="branding-caption"><div class="bc-label">Stationery</div><div class="bc-title">Business Cards</div></div>
     </div>
     <div class="branding-item branding-item--tall">
-      <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/standee-4k.jpg" alt="Event standee mockup" width="600" height="800">
+      <div class="mockup-placeholder lazy-shimmer">Standee — 4K Mockup</div>
       <div class="branding-caption"><div class="bc-label">Environmental</div><div class="bc-title">Event Standee</div></div>
     </div>
     <div class="branding-item branding-item--square">
-      <img class="lazy lazy-shimmer" data-lazy-src="assets/branding/letterhead-4k.jpg" alt="Corporate letterhead mockup" width="600" height="600">
+      <div class="mockup-placeholder lazy-shimmer">Letterhead</div>
       <div class="branding-caption"><div class="bc-label">Stationery</div><div class="bc-title">Letterhead</div></div>
     </div>
     <div class="branding-item branding-item--square">
@@ -448,7 +442,7 @@ document.querySelectorAll('.proj-canvas').forEach(c=>{
 
 // REVEAL handled by shared.js
 </script>
-<script src="shared.js"></script>
+<script src="/green/shared.js"></script>
 <script>
 </script>
 
