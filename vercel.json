@@ -1,6 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/studio/index.html", "destination": "/studio", "permanent": true },
+    { "source": "/tva/index.html", "destination": "/tva", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/tva", "destination": "/tva/index.html" },
     { "source": "/tva/work", "destination": "/tva/work.html" },
