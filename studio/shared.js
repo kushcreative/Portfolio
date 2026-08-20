@@ -94,7 +94,7 @@
           color: '#3a7336',
         },
       ],
-      projectUrl: '/green/project-nexora',
+      projectUrl: '/studio/project-nexora',
     },
     chronex: {
       title: 'CHRONEX',
@@ -122,7 +122,7 @@
           color: '#284a70',
         },
       ],
-      projectUrl: '/green/project-chronex',
+      projectUrl: '/studio/project-chronex',
     },
   };
 

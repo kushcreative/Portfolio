@@ -12,15 +12,15 @@
     { "source": "/tva/project-echoes", "destination": "/tva/project-echoes.html" },
     { "source": "/tva/project-poster", "destination": "/tva/project-poster.html" },
 
-    { "source": "/green", "destination": "/green/index.html" },
-    { "source": "/green/work", "destination": "/green/work.html" },
-    { "source": "/green/creative-os", "destination": "/green/creative-os.html" },
-    { "source": "/green/about", "destination": "/green/about.html" },
-    { "source": "/green/contact", "destination": "/green/contact.html" },
-    { "source": "/green/lab", "destination": "/green/lab.html" },
-    { "source": "/green/project-nexora", "destination": "/green/project-nexora.html" },
-    { "source": "/green/project-chronex", "destination": "/green/project-chronex.html" },
-    { "source": "/green/project-echoes", "destination": "/green/project-echoes.html" },
-    { "source": "/green/project-poster", "destination": "/green/project-poster.html" }
+    { "source": "/studio", "destination": "/studio/index.html" },
+    { "source": "/studio/work", "destination": "/studio/work.html" },
+    { "source": "/studio/creative-os", "destination": "/studio/creative-os.html" },
+    { "source": "/studio/about", "destination": "/studio/about.html" },
+    { "source": "/studio/contact", "destination": "/studio/contact.html" },
+    { "source": "/studio/lab", "destination": "/studio/lab.html" },
+    { "source": "/studio/project-nexora", "destination": "/studio/project-nexora.html" },
+    { "source": "/studio/project-chronex", "destination": "/studio/project-chronex.html" },
+    { "source": "/studio/project-echoes", "destination": "/studio/project-echoes.html" },
+    { "source": "/studio/project-poster", "destination": "/studio/project-poster.html" }
   ]
 }
