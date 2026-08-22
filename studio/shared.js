@@ -1,3 +1,5 @@
+void import('/router.js');
+
 /**
  * Kushal Portfolio — Shared JS
  * Lazy loading · Video deferral · Case study modals

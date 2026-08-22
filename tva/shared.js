@@ -1,3 +1,5 @@
+void import('/router.js');
+
 (()=>{'use strict';
 const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>[...c.querySelectorAll(s)];
 const loader=$('.loader');const hideLoader=()=>loader?.classList.add('is-hidden');window.addEventListener('load',()=>setTimeout(hideLoader,160),{once:true});setTimeout(hideLoader,1800);
