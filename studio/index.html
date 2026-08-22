@@ -63,13 +63,19 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 @keyframes loaderIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 @keyframes loaderPulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
 
-/* ── NAV ──
-   Shared nav rules (desktop links, logo, CTA, pulse keyframes) now live
-   solely in shared.css — this page previously duplicated the entire block
-   with a slightly different .nav-cta, which silently overrode shared.css
-   because this inline style block loads after the shared.css link tag. That
-   .nav-cta difference (hover lift) has been merged into shared.css so
-   removing the duplicate here doesn't change how this page looks. */
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(245,240,232,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--green);display:flex;align-items:center;gap:.5rem;text-decoration:none;}
+.nav-logo-dot{width:6px;height:6px;border-radius:50%;background:var(--green3);animation:pulse 2s infinite;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
+.nav-links a{font-size:.75rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;background:var(--green3);transform:scaleX(0);transition:transform .25s;}
+.nav-links a:hover{color:var(--green);}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-links a.active{color:var(--green);}
+.nav-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--cream);padding:.55rem 1.3rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .2s;}
+.nav-cta:hover{background:var(--green2);transform:translateY(-1px);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
 
 .scroll-txt{position:fixed;right:2rem;top:50%;transform:translateY(-50%) rotate(90deg);font-size:.62rem;letter-spacing:.22em;color:var(--muted2);text-transform:uppercase;z-index:10;}
 
@@ -113,7 +119,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .btn-outline{display:inline-flex;align-items:center;gap:.6rem;background:transparent;padding:.9rem 2.2rem;border-radius:4px;border:1.5px solid var(--border2);font-size:.82rem;font-weight:500;color:var(--text);text-decoration:none;letter-spacing:.04em;transition:border-color .2s,color .2s,background .2s;}
 .btn-outline:hover{border-color:var(--green3);color:var(--green);background:rgba(58,115,54,.04);}
 .hero-right{display:flex;align-items:center;justify-content:center;position:relative;}
-.crt-wrap{position:relative;width:100%;max-width:656px;aspect-ratio:954/827;user-select:none;transform:rotate(0deg);transform-origin:center center;}
+.crt-wrap{position:relative;width:100%;max-width:560px;aspect-ratio:954/827;user-select:none;transform:rotate(-6deg);transform-origin:center center;}
 .crt-body-img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;pointer-events:none;-webkit-user-drag:none;user-drag:none;}
 .crt-screen{
   position:absolute;
@@ -413,54 +419,6 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .about-prev-label{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,232,.5);margin-bottom:.75rem;}
 .about-prev-title{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;letter-spacing:.04em;color:var(--cream);margin-bottom:2rem;line-height:1.05;}
 
-/* ── MOTION & ANIMATION (video-wrap grid) ──
-   These classes are used by the "Cinematic Reels" section markup and by
-   shared.js's initLazyLoad/initVideoPlayers, but had no CSS anywhere,
-   so the section rendered as unstyled stacked blocks. Added using the
-   same tokens/patterns as the rest of the page (border-radius, --bg2,
-   --border, uppercase label treatment) — no new visual language. */
-.motion-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:1.5px;background:var(--border);}
-.motion-cinematic,.motion-reels{display:grid;gap:1.5px;}
-.motion-reels{grid-template-columns:1fr 1fr;}
-.video-wrap{position:relative;overflow:hidden;background:var(--bg2);cursor:pointer;}
-.video-wrap--169{aspect-ratio:16/9;}
-.video-wrap--916{aspect-ratio:9/16;}
-.video-wrap video{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s;}
-.video-wrap video.loaded{opacity:1;}
-.video-badge{position:absolute;top:1rem;left:1rem;z-index:2;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;border-radius:3px;background:rgba(26,35,24,.55);color:var(--cream);backdrop-filter:blur(4px);}
-.video-poster{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;background:rgba(26,35,24,.35);transition:opacity .3s;}
-.video-play{width:56px;height:56px;border-radius:50%;background:rgba(245,240,232,.92);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.1rem;padding-left:.15rem;transition:transform .2s,background .2s;}
-.video-wrap:hover .video-play{transform:scale(1.08);background:var(--cream);}
-.video-meta{position:absolute;left:1rem;bottom:1rem;z-index:2;}
-.video-title{font-size:.85rem;font-weight:600;color:var(--cream);}
-.video-tag{font-size:.68rem;color:rgba(245,240,232,.6);margin-top:.15rem;}
-@media(max-width:768px){
-  .motion-layout{grid-template-columns:1fr;}
-}
-
-/* ── GRAPHIC DESIGN (mockup grid) ──
-   Same situation as above: markup + lazy-shimmer JS hooks existed with no
-   CSS to back them. */
-.branding-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:var(--border);}
-.branding-item--wide{grid-column:span 2;}
-.branding-item--tall{grid-row:span 2;}
-.mockup-placeholder{min-height:200px;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:1rem;background:var(--bg2);color:var(--muted2);font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
-.branding-caption{padding:1rem 1.25rem;background:var(--bg2);border-top:1px solid var(--border);}
-.bc-label{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:.3rem;}
-.bc-title{font-size:.85rem;font-weight:500;color:var(--text);}
-@media(max-width:768px){
-  .branding-grid{grid-template-columns:repeat(2,1fr);}
-  .branding-item--wide{grid-column:span 2;}
-  .branding-item--tall{grid-row:span 1;}
-}
-
-/* ── LAZY SHIMMER (skeleton state before shared.js swaps in the real
-   src, used by img.lazy/video.lazy/[data-lazy-src] and the mockup
-   placeholders above) ── */
-.lazy-shimmer{background:linear-gradient(100deg,var(--bg2) 30%,var(--bg3) 45%,var(--bg2) 60%);background-size:250% 100%;animation:lazyShimmer 1.6s ease-in-out infinite;}
-.lazy-shimmer.loaded{animation:none;background:none;}
-@keyframes lazyShimmer{0%{background-position:200% 0;}100%{background-position:-50% 0;}}
-
 /* ── MEMORIAL FOOTER ── */
 footer{
   background:var(--green);
@@ -530,9 +488,10 @@ footer{
 }
 .back-top:hover{color:var(--cream);transform:translateY(-2px);}
 
-/* .reveal / .reveal.up / .reveal.vis now live in shared.css only (was
-   duplicated here verbatim, plus .reveal.up wasn't even applied to any
-   element on this page). */
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.23,1,.32,1),transform .7s cubic-bezier(.23,1,.32,1);}
+.reveal.up{transform:translateX(-28px);}
+.reveal.vis{opacity:1;transform:none;}
 
 /* Inline behind-the-scenes button in work cards */
 .btn-process--inline{
@@ -609,7 +568,7 @@ footer{
 
 @media(max-width:1024px){
   .hero{grid-template-columns:1fr;padding:7rem 1.5rem 3rem;}
-  .crt-wrap{max-width:422px;}
+  .crt-wrap{max-width:360px;}
   .work-grid{grid-template-columns:1fr;}
   .about-prev-grid{grid-template-columns:1fr;gap:3rem;}
   .sec,.services-sec{padding:4rem 1.5rem;}
@@ -631,10 +590,140 @@ footer{
   .trust-items{gap:1.5rem;}
 }
 
-/* Mobile nav (hamburger + full-screen overlay) now lives solely in
-   shared.css, including the .nav-back rule this page's copy had added to
-   the <768px query (kept, since project pages use .nav-back). This block
-   was a byte-for-byte duplicate that was silently overriding shared.css. */
+/* ═══════════════════════════════════════════════════
+   MOBILE NAVIGATION — shared fix (all pages)
+   ═══════════════════════════════════════════════════ */
+
+/* Hamburger button — hidden on desktop */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: .5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+  z-index: 210;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--green);
+  border-radius: 1px;
+  transition: transform .3s cubic-bezier(.23,1,.32,1), opacity .3s;
+  pointer-events: none;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Full-screen mobile overlay */
+.nav-mobile-menu {
+  display: flex;           /* always in flex — visibility controlled by opacity/pointer-events */
+  visibility: hidden;
+  position: fixed;
+  inset: 0;
+  z-index: 209;
+  background: rgba(245, 240, 232, .97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s cubic-bezier(.23,1,.32,1), visibility .35s;
+}
+.nav-mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+}
+
+/* Close button inside overlay */
+.nav-mobile-close {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--border2, rgba(26,35,24,.18));
+  border-radius: 6px;
+  background: var(--bg2, #ece7dc);
+  color: var(--muted, #6b7a68);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.nav-mobile-close:hover {
+  border-color: var(--green3, #3a7336);
+  color: var(--green, #1e3d1c);
+  background: var(--bg3, #e4ddd0);
+}
+
+/* Nav links in overlay */
+.nav-mobile-menu a {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 10vw, 3.5rem);
+  letter-spacing: .08em;
+  color: var(--green, #1e3d1c);
+  text-decoration: none;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .35s, transform .35s, color .2s;
+}
+.nav-mobile-menu.open a { opacity: 1; transform: none; }
+.nav-mobile-menu.open a:nth-child(2) { transition-delay: .05s; }
+.nav-mobile-menu.open a:nth-child(3) { transition-delay: .10s; }
+.nav-mobile-menu.open a:nth-child(4) { transition-delay: .15s; }
+.nav-mobile-menu.open a:nth-child(5) { transition-delay: .20s; }
+.nav-mobile-menu.open a:nth-child(6) { transition-delay: .25s; }
+.nav-mobile-menu.open a:nth-child(7) { transition-delay: .30s; }
+.nav-mobile-menu a:hover { color: var(--green3, #3a7336); }
+.nav-mobile-menu .nav-mobile-cta {
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  color: var(--green3, #3a7336);
+  border: 1.5px solid var(--green3, #3a7336);
+  padding: .6rem 2rem;
+  border-radius: 4px;
+  letter-spacing: .1em;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.nav-mobile-menu .nav-mobile-cta:hover {
+  background: var(--green, #1e3d1c);
+  color: var(--cream, #f5f0e8);
+  border-color: var(--green, #1e3d1c);
+}
+
+/* ── RESPONSIVE: <768px ── */
+@media (max-width: 768px) {
+  /* Hide desktop nav elements */
+  .nav-links { display: none !important; }
+  .nav-cta   { display: none !important; }
+  .nav-back  { display: none !important; }  /* project pages */
+
+  /* Show hamburger */
+  .nav-hamburger { display: flex; }
+
+  /* Prevent body scroll when menu open */
+  body.nav-open { overflow: hidden; }
+
+  /* Ensure nav doesn't clip on small screens */
+  nav {
+    padding: 1rem 1.25rem !important;
+    flex-wrap: nowrap;
+    overflow: visible;
+  }
+}
 
 /* ── SCROLL-TRIGGERED TEXT REPLACEMENT ── */
 .scroll-swap-wrap{
@@ -816,7 +905,7 @@ footer{
   <div class="hero-right">
     <div class="crt-wrap" role="img" aria-label="Vintage CRT monitor with a slowly rotating abstract sculpture inside the screen — decorative">
       <div class="crt-glow" aria-hidden="true"></div>
-      <img src="./crt-monitor.jpg" alt="" class="crt-body-img" aria-hidden="true" draggable="false">
+      <img src="/crt-monitor.jpg" alt="" class="crt-body-img" aria-hidden="true" draggable="false">
       <div class="crt-screen" id="crtScreen">
         <canvas id="heroCanvas" aria-hidden="true"></canvas>
         <div class="crt-scanlines" aria-hidden="true"></div>
@@ -1215,29 +1304,9 @@ mq.innerHTML = mHtml + mHtml;
   renderer.outputColorSpace = THREE.SRGBColorSpace || THREE.LinearSRGBColorSpace;
 
   const scene = new THREE.Scene();
-  // Widened FOV + closer camera: the previous 32°/4.6-unit setup was nearly
-  // orthographic, which is why rotating the content still read as a flat
-  // cutout spinning in place — orthographic projection has almost no
-  // foreshortening/depth parallax regardless of rotation. A wider FOV at a
-  // closer distance is what actually produces real perspective depth.
-  const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 20);
-  // Slight off-axis camera position (not centered on-axis) — this mirrors how
-  // the physical CRT was photographed from an angle, not straight-on, and
-  // produces genuine asymmetric keystoning (converging perspective lines)
-  // rather than a symmetric object-on-a-turntable look.
-  camera.position.set(0.55, 0.4, 3.15);
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 20);
+  camera.position.set(0, 0.05, 4.6);
   camera.lookAt(0, 0, 0);
-
-  /* ── screen-angle match: the physical CRT photo is shot from a 3/4 angle
-     (front turned slightly toward camera-left, receding to the right, camera
-     looking slightly downward onto the tube). This group re-orients the whole
-     3D scene content — not the canvas element, not the camera lens itself —
-     so the sculpture reads as though it's actually sitting inside that angled
-     tube instead of floating flat behind a straight-on window. ── */
-  const screenAngle = new THREE.Group();
-  screenAngle.rotation.y = THREE.MathUtils.degToRad(-25); // yaw: right side recedes, matches the CRT screen's 3/4 turn
-  screenAngle.rotation.x = THREE.MathUtils.degToRad(12);  // pitch: looking-down-onto-screen angle
-  scene.add(screenAngle);
 
   function sizeToScreen(){
     const w = screenEl.clientWidth || 300;
@@ -1249,34 +1318,30 @@ mq.innerHTML = mHtml + mHtml;
   sizeToScreen();
   window.addEventListener('resize', sizeToScreen);
 
-  /* ── soft studio lighting for the sculpture — lights live inside screenAngle
-     too, so the key/fill/rim direction rotates with the scene and keeps
-     hitting the sculpture the same way relative to it, instead of raking
-     across it from the old straight-on angle. ── */
+  /* ── soft studio lighting for the sculpture ── */
   const hemi = new THREE.HemisphereLight(0xdcead0, 0x0b140a, 0.8);
-  screenAngle.add(hemi);
+  scene.add(hemi);
   const key = new THREE.DirectionalLight(0xeaffe2, 1.05);
   key.position.set(3, 4, 5);
-  screenAngle.add(key);
+  scene.add(key);
   const fill = new THREE.DirectionalLight(0x4e9e49, 0.32);
   fill.position.set(-3, -1, 2.5);
-  screenAngle.add(fill);
+  scene.add(fill);
   const rim = new THREE.DirectionalLight(0xffffff, 0.4);
   rim.position.set(-2.5, 2, -3);
-  screenAngle.add(rim);
+  scene.add(rim);
 
   /* ── abstract organic sculpture on a small plinth ──
-     hierarchy: screenAngle (fixed yaw/pitch — matches the CRT's 3/4 photo angle)
-              → sculptureWrapper (mouse parallax)
+     hierarchy: sculptureWrapper (mouse parallax)
               → sculptureTilt (fixed ~10° CCW artistic lean, base included)
               → sculptureSpin (continuous vertical-axis rotation, keeps the lean while it turns) */
   const sculptureWrapper = new THREE.Group(); // mouse parallax only
   const sculptureTilt = new THREE.Group();    // constant artistic tilt, complements the monitor's lean
   const sculptureSpin = new THREE.Group();    // continuous vertical-axis rotation
-  sculptureTilt.rotation.z = THREE.MathUtils ? THREE.MathUtils.degToRad(8) : (8 * Math.PI / 180); // subtle leftward (CCW) artistic tilt
+  sculptureTilt.rotation.z = THREE.MathUtils ? THREE.MathUtils.degToRad(10) : (10 * Math.PI / 180); // ~10° CCW
   sculptureTilt.add(sculptureSpin);
   sculptureWrapper.add(sculptureTilt);
-  screenAngle.add(sculptureWrapper);
+  scene.add(sculptureWrapper);
 
   const plinth = new THREE.Mesh(
     new THREE.CylinderGeometry(0.64, 0.68, 0.11, 28),
@@ -1284,17 +1349,6 @@ mq.innerHTML = mHtml + mHtml;
   );
   plinth.position.y = -0.64;
   sculptureSpin.add(plinth);
-
-  // subtle asymmetric seam on the plinth rim — a plain cylinder is radially
-  // symmetric and shows no visible change as it spins, which is why the base
-  // read as "static" even though it already shares sculptureSpin's rotation
-  // with the sculpture. This small mark makes that shared rotation visible.
-  const plinthSeam = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.655, 0.695, 0.045, 8, 1, false, 0, Math.PI / 10),
-    new THREE.MeshStandardMaterial({ color: 0x1c2e19, roughness: 0.5, metalness: 0.05 })
-  );
-  plinthSeam.position.y = -0.6;
-  sculptureSpin.add(plinthSeam);
 
   const sculptureGeo = new THREE.TorusKnotGeometry(0.46, 0.145, 180, 22, 2, 5);
   const SculptMat = THREE.MeshPhysicalMaterial ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
@@ -1310,86 +1364,25 @@ mq.innerHTML = mHtml + mHtml;
   sculpture.rotation.x = 0.35;
   sculptureSpin.add(sculpture);
 
-  /* ── mouse interaction: right-button drag inside the CRT screen only ──
-     rotates the sculpture+plinth group (sculptureSpin) directly in 3D space.
-     Auto-rotation pauses while dragging, then resumes smoothly; a short
-     inertia decay bridges the release so it doesn't feel abrupt. ── */
-  const ROTATION_SECONDS = 10; // full auto-rotation period, within the requested 8–12s range
-  const AUTO_SPEED = (Math.PI * 2) / ROTATION_SECONDS; // rad/sec
-  const DRAG_SENSITIVITY = 0.006; // rad per pixel of drag — low, for smooth/controlled feel
-  const PITCH_MIN = -0.55, PITCH_MAX = 0.6; // clamp vertical drag so it can't flip upside down
-
-  let autoAngle = 0;      // accumulated automatic Y rotation (paused while dragging)
-  let manualYOffset = 0;  // Y rotation contributed by the user's drag (persists after release)
-  let manualXOffset = 0;  // X rotation (vertical drag), clamped
-  let velY = 0, velX = 0; // inertia velocities (rad/sec), decayed after release
-  let isDragging = false;
-  let lastPX = 0, lastPY = 0;
-
-  screenEl.style.touchAction = 'none';
-
-  screenEl.addEventListener('pointerdown', (e) => {
-    if (e.button !== 0) return; // left mouse button only
-    isDragging = true;
-    velY = 0; velX = 0; // a fresh grab cancels any leftover inertia
-    lastPX = e.clientX;
-    lastPY = e.clientY;
-    screenEl.setPointerCapture(e.pointerId);
-    e.preventDefault();
+  /* ── animation loop: sculpture only — the monitor image never moves ── */
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth) - 0.5;
+    mouseY = (e.clientY / window.innerHeight) - 0.5;
   });
 
-  screenEl.addEventListener('pointermove', (e) => {
-    if (!isDragging) return;
-    const dx = e.clientX - lastPX;
-    const dy = e.clientY - lastPY;
-    lastPX = e.clientX;
-    lastPY = e.clientY;
-
-    const dYaw = dx * DRAG_SENSITIVITY;
-    const dPitch = dy * DRAG_SENSITIVITY;
-    manualYOffset += dYaw;
-    manualXOffset = Math.max(PITCH_MIN, Math.min(PITCH_MAX, manualXOffset + dPitch));
-
-    // running estimate of drag speed, used to seed inertia on release
-    velY = dYaw * 60;
-    velX = dPitch * 60;
-    e.preventDefault();
-  });
-
-  function endDrag(e){
-    if (!isDragging) return;
-    isDragging = false;
-    if (screenEl.hasPointerCapture && e && e.pointerId !== undefined && screenEl.hasPointerCapture(e.pointerId)) {
-      screenEl.releasePointerCapture(e.pointerId);
-    }
-  }
-  screenEl.addEventListener('pointerup', (e) => { if (e.button === 0) endDrag(e); });
-  screenEl.addEventListener('pointercancel', endDrag);
-
+  const ROTATION_SECONDS = 10; // full rotation period, within the requested 8–12s range
   const clock = new THREE.Clock();
 
   function animate(){
     requestAnimationFrame(animate);
-    const dt = Math.min(clock.getDelta(), 0.05);
+    const t = clock.getElapsedTime();
 
-    if (isDragging) {
-      // automatic rotation pauses entirely while the user has manual control
-    } else {
-      autoAngle += dt * AUTO_SPEED;
-      // short inertia glide, then settles — smoothly hands back to auto-rotation
-      if (Math.abs(velY) > 0.0005 || Math.abs(velX) > 0.0005) {
-        manualYOffset += velY * dt;
-        manualXOffset = Math.max(PITCH_MIN, Math.min(PITCH_MAX, manualXOffset + velX * dt));
-        const decay = Math.pow(0.06, dt); // fast-ish settle, not floaty
-        velY *= decay;
-        velX *= decay;
-      } else {
-        velY = 0; velX = 0;
-      }
-    }
+    sculptureSpin.rotation.y = t * (Math.PI * 2 / ROTATION_SECONDS);
 
-    sculptureSpin.rotation.y = autoAngle + manualYOffset;
-    sculptureSpin.rotation.x = manualXOffset;
+    // very subtle mouse-based parallax, sculpture only
+    sculptureWrapper.rotation.y += (mouseX * 0.12 - sculptureWrapper.rotation.y) * 0.04;
+    sculptureWrapper.rotation.x += (-mouseY * 0.07 - sculptureWrapper.rotation.x) * 0.04;
 
     renderer.render(scene, camera);
   }
