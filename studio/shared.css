@@ -14,8 +14,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;background:var(--green3);transform:scaleX(0);transition:transform .25s;}
 .nav-links a:hover,.nav-links a.active{color:var(--green);}
 .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
-.nav-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--cream);padding:.55rem 1.3rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .2s;}
-.nav-cta:hover{background:var(--green2);transform:translateY(-1px);}
+.nav-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--cream);padding:.55rem 1.3rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
+.nav-cta:hover{background:var(--green2);}
 
 /* ── MOBILE NAV ── */
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.5rem;margin-left:auto;flex-shrink:0;z-index:210;}
@@ -55,6 +55,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btn-process{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.1rem;border:1.5px solid var(--border2);border-radius:3px;background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .2s;}
 .btn-process:hover{background:var(--green);color:var(--cream);border-color:var(--green);transform:translateY(-2px);}
 
+/* ── MOTION & CINEMATIC SECTION ── */
+.motion-sec{padding:6rem 3rem 6rem 5rem;background:var(--bg2);border-top:1px solid var(--border);}
+.motion-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;}
+.motion-layout{display:grid;grid-template-columns:1.4fr .6fr;gap:1.5rem;align-items:start;}
+.motion-cinematic{display:flex;flex-direction:column;gap:1.5rem;}
+.motion-reels{display:flex;flex-direction:column;gap:1.5rem;}
+.video-wrap{position:relative;border-radius:20px;overflow:hidden;background:var(--green);border:1px solid var(--border);cursor:pointer;box-shadow:var(--shadow-soft,0 20px 60px -20px rgba(0,0,0,.5));transition:transform .45s cubic-bezier(.23,1,.32,1),box-shadow .45s;}
+.video-wrap:hover{transform:translateY(-6px);box-shadow:0 34px 80px -20px rgba(0,0,0,.65);}
+.video-wrap--169{aspect-ratio:16/9;}
+.video-wrap--916{aspect-ratio:9/16;max-height:520px;}
+.video-wrap video,.video-wrap .video-poster{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.23,1,.32,1);}
+.video-wrap:hover video,.video-wrap:hover .video-poster{transform:scale(1.03);}
+.video-poster{position:absolute;inset:0;background:linear-gradient(135deg,#0d1a0d,#1a3318,#2a5628);display:flex;align-items:center;justify-content:center;}
+.video-poster::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(245,240,232,.04) 1px,transparent 1px);background-size:24px 24px;}
+.video-play{position:relative;z-index:2;width:64px;height:64px;border-radius:50%;background:rgba(245,240,232,.15);backdrop-filter:blur(8px);border:1.5px solid rgba(245,240,232,.35);display:flex;align-items:center;justify-content:center;color:var(--cream);font-size:1.4rem;transition:background .25s,transform .25s;}
+.video-wrap:hover .video-play{background:rgba(78,158,73,.5);transform:scale(1.08);}
+.video-badge{position:absolute;top:1rem;left:1rem;z-index:3;font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .7rem;border-radius:6px;background:rgba(26,35,24,.75);color:var(--greenlight);border:1px solid rgba(78,158,73,.4);backdrop-filter:blur(6px);}
+.video-meta{position:absolute;bottom:0;left:0;right:0;z-index:3;padding:2.5rem 1.25rem 1.25rem;background:linear-gradient(to top,rgba(26,35,24,.9) 0%,transparent 100%);}
+.video-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.06em;color:var(--cream);line-height:1.1;}
+.video-tag{font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.55);margin-top:.25rem;}
+
 /* ── BRANDING / MOCKUP GRID ──
    Restored from the original Studio component stylesheet. Home and Work
    retained this markup after the folder migration, but these matching rules
@@ -75,7 +96,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .bc-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--greenlight);}
 .bc-title{font-size:.85rem;font-weight:600;color:var(--cream);margin-top:.2rem;}
 @media(max-width:1024px){
-  .branding-sec{padding:4rem 1.5rem;}
+  .motion-sec,.branding-sec{padding:4rem 1.5rem;}
+  .motion-layout{grid-template-columns:1fr;}
+  .motion-reels{flex-direction:row;overflow-x:auto;gap:1rem;padding-bottom:.5rem;scroll-snap-type:x mandatory;}
+  .motion-reels .video-wrap--916{flex:0 0 220px;max-height:none;scroll-snap-align:start;}
   .branding-grid{columns:2;}
 }
 @media(max-width:600px){
