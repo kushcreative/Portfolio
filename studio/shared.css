@@ -55,6 +55,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btn-process{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.1rem;border:1.5px solid var(--border2);border-radius:3px;background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .2s;}
 .btn-process:hover{background:var(--green);color:var(--cream);border-color:var(--green);transform:translateY(-2px);}
 
+/* ── BRANDING / MOCKUP GRID ──
+   Restored from the original Studio component stylesheet. Home and Work
+   retained this markup after the folder migration, but these matching rules
+   were dropped by a later file upload. */
+.branding-sec{padding:6rem 3rem 6rem 5rem;background:var(--bg);}
+.branding-grid{columns:3;column-gap:1.25rem;margin-top:2rem;}
+.branding-item{break-inside:avoid;margin-bottom:1.25rem;position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);cursor:pointer;box-shadow:0 16px 40px -18px rgba(0,0,0,.5);transition:transform .4s cubic-bezier(.23,1,.32,1),box-shadow .4s,border-color .4s;}
+.branding-item:hover{transform:translateY(-5px);box-shadow:0 26px 60px -18px rgba(0,0,0,.65);border-color:var(--border2);}
+.branding-item img,.branding-item .mockup-placeholder{width:100%;display:block;transition:transform .55s cubic-bezier(.23,1,.32,1);}
+.branding-item:hover img,.branding-item:hover .mockup-placeholder{transform:scale(1.06);}
+.mockup-placeholder{display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.08em;color:rgba(245,240,232,.35);background:linear-gradient(160deg,var(--green) 0%,var(--green2) 50%,var(--green3) 100%);position:relative;}
+.mockup-placeholder::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(245,240,232,.05) 1px,transparent 1px);background-size:20px 20px;}
+.branding-item--tall .mockup-placeholder{aspect-ratio:3/4;min-height:280px;}
+.branding-item--wide .mockup-placeholder{aspect-ratio:16/9;min-height:160px;}
+.branding-item--square .mockup-placeholder{aspect-ratio:1;min-height:200px;}
+.branding-caption{position:absolute;bottom:0;left:0;right:0;padding:2rem 1rem 1rem;background:linear-gradient(to top,rgba(26,35,24,.88) 0%,transparent 100%);transform:translateY(4px);opacity:0;transition:opacity .35s,transform .35s;}
+.branding-item:hover .branding-caption{opacity:1;transform:translateY(0);}
+.bc-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--greenlight);}
+.bc-title{font-size:.85rem;font-weight:600;color:var(--cream);margin-top:.2rem;}
+@media(max-width:1024px){
+  .branding-sec{padding:4rem 1.5rem;}
+  .branding-grid{columns:2;}
+}
+@media(max-width:600px){
+  .branding-grid{columns:1;}
+}
+
 /* ── CASE STUDY MODAL (markup built dynamically by shared.js initCaseModals) ──
    Was previously unstyled: the JS created #caseModal/.case-panel etc. but no
    page defined CSS for them, so the modal rendered as unstyled full-width
