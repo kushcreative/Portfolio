@@ -63,19 +63,13 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 @keyframes loaderIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 @keyframes loaderPulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(245,240,232,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--green);display:flex;align-items:center;gap:.5rem;text-decoration:none;}
-.nav-logo-dot{width:6px;height:6px;border-radius:50%;background:var(--green3);animation:pulse 2s infinite;}
-.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
-.nav-links a{font-size:.75rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.14em;text-transform:uppercase;transition:color .2s;position:relative;}
-.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;background:var(--green3);transform:scaleX(0);transition:transform .25s;}
-.nav-links a:hover{color:var(--green);}
-.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
-.nav-links a.active{color:var(--green);}
-.nav-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--cream);padding:.55rem 1.3rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .2s;}
-.nav-cta:hover{background:var(--green2);transform:translateY(-1px);}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+/* ── NAV ──
+   Shared nav rules (desktop links, logo, CTA, pulse keyframes) now live
+   solely in shared.css — this page previously duplicated the entire block
+   with a slightly different .nav-cta, which silently overrode shared.css
+   because this inline style block loads after the shared.css link tag. That
+   .nav-cta difference (hover lift) has been merged into shared.css so
+   removing the duplicate here doesn't change how this page looks. */
 
 .scroll-txt{position:fixed;right:2rem;top:50%;transform:translateY(-50%) rotate(90deg);font-size:.62rem;letter-spacing:.22em;color:var(--muted2);text-transform:uppercase;z-index:10;}
 
@@ -419,6 +413,54 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .about-prev-label{font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,232,.5);margin-bottom:.75rem;}
 .about-prev-title{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;letter-spacing:.04em;color:var(--cream);margin-bottom:2rem;line-height:1.05;}
 
+/* ── MOTION & ANIMATION (video-wrap grid) ──
+   These classes are used by the "Cinematic Reels" section markup and by
+   shared.js's initLazyLoad/initVideoPlayers, but had no CSS anywhere,
+   so the section rendered as unstyled stacked blocks. Added using the
+   same tokens/patterns as the rest of the page (border-radius, --bg2,
+   --border, uppercase label treatment) — no new visual language. */
+.motion-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:1.5px;background:var(--border);}
+.motion-cinematic,.motion-reels{display:grid;gap:1.5px;}
+.motion-reels{grid-template-columns:1fr 1fr;}
+.video-wrap{position:relative;overflow:hidden;background:var(--bg2);cursor:pointer;}
+.video-wrap--169{aspect-ratio:16/9;}
+.video-wrap--916{aspect-ratio:9/16;}
+.video-wrap video{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s;}
+.video-wrap video.loaded{opacity:1;}
+.video-badge{position:absolute;top:1rem;left:1rem;z-index:2;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;border-radius:3px;background:rgba(26,35,24,.55);color:var(--cream);backdrop-filter:blur(4px);}
+.video-poster{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;background:rgba(26,35,24,.35);transition:opacity .3s;}
+.video-play{width:56px;height:56px;border-radius:50%;background:rgba(245,240,232,.92);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.1rem;padding-left:.15rem;transition:transform .2s,background .2s;}
+.video-wrap:hover .video-play{transform:scale(1.08);background:var(--cream);}
+.video-meta{position:absolute;left:1rem;bottom:1rem;z-index:2;}
+.video-title{font-size:.85rem;font-weight:600;color:var(--cream);}
+.video-tag{font-size:.68rem;color:rgba(245,240,232,.6);margin-top:.15rem;}
+@media(max-width:768px){
+  .motion-layout{grid-template-columns:1fr;}
+}
+
+/* ── GRAPHIC DESIGN (mockup grid) ──
+   Same situation as above: markup + lazy-shimmer JS hooks existed with no
+   CSS to back them. */
+.branding-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:var(--border);}
+.branding-item--wide{grid-column:span 2;}
+.branding-item--tall{grid-row:span 2;}
+.mockup-placeholder{min-height:200px;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:1rem;background:var(--bg2);color:var(--muted2);font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+.branding-caption{padding:1rem 1.25rem;background:var(--bg2);border-top:1px solid var(--border);}
+.bc-label{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:.3rem;}
+.bc-title{font-size:.85rem;font-weight:500;color:var(--text);}
+@media(max-width:768px){
+  .branding-grid{grid-template-columns:repeat(2,1fr);}
+  .branding-item--wide{grid-column:span 2;}
+  .branding-item--tall{grid-row:span 1;}
+}
+
+/* ── LAZY SHIMMER (skeleton state before shared.js swaps in the real
+   src, used by img.lazy/video.lazy/[data-lazy-src] and the mockup
+   placeholders above) ── */
+.lazy-shimmer{background:linear-gradient(100deg,var(--bg2) 30%,var(--bg3) 45%,var(--bg2) 60%);background-size:250% 100%;animation:lazyShimmer 1.6s ease-in-out infinite;}
+.lazy-shimmer.loaded{animation:none;background:none;}
+@keyframes lazyShimmer{0%{background-position:200% 0;}100%{background-position:-50% 0;}}
+
 /* ── MEMORIAL FOOTER ── */
 footer{
   background:var(--green);
@@ -488,10 +530,9 @@ footer{
 }
 .back-top:hover{color:var(--cream);transform:translateY(-2px);}
 
-/* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.23,1,.32,1),transform .7s cubic-bezier(.23,1,.32,1);}
-.reveal.up{transform:translateX(-28px);}
-.reveal.vis{opacity:1;transform:none;}
+/* .reveal / .reveal.up / .reveal.vis now live in shared.css only (was
+   duplicated here verbatim, plus .reveal.up wasn't even applied to any
+   element on this page). */
 
 /* Inline behind-the-scenes button in work cards */
 .btn-process--inline{
@@ -590,140 +631,10 @@ footer{
   .trust-items{gap:1.5rem;}
 }
 
-/* ═══════════════════════════════════════════════════
-   MOBILE NAVIGATION — shared fix (all pages)
-   ═══════════════════════════════════════════════════ */
-
-/* Hamburger button — hidden on desktop */
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: .5rem;
-  margin-left: auto;
-  flex-shrink: 0;
-  z-index: 210;
-}
-.nav-hamburger span {
-  display: block;
-  width: 22px;
-  height: 1.5px;
-  background: var(--green);
-  border-radius: 1px;
-  transition: transform .3s cubic-bezier(.23,1,.32,1), opacity .3s;
-  pointer-events: none;
-}
-.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-/* Full-screen mobile overlay */
-.nav-mobile-menu {
-  display: flex;           /* always in flex — visibility controlled by opacity/pointer-events */
-  visibility: hidden;
-  position: fixed;
-  inset: 0;
-  z-index: 209;
-  background: rgba(245, 240, 232, .97);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .35s cubic-bezier(.23,1,.32,1), visibility .35s;
-}
-.nav-mobile-menu.open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: all;
-}
-
-/* Close button inside overlay */
-.nav-mobile-close {
-  position: absolute;
-  top: 1.4rem;
-  right: 1.4rem;
-  width: 40px;
-  height: 40px;
-  border: 1.5px solid var(--border2, rgba(26,35,24,.18));
-  border-radius: 6px;
-  background: var(--bg2, #ece7dc);
-  color: var(--muted, #6b7a68);
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Space Grotesk', sans-serif;
-  transition: border-color .2s, color .2s, background .2s;
-}
-.nav-mobile-close:hover {
-  border-color: var(--green3, #3a7336);
-  color: var(--green, #1e3d1c);
-  background: var(--bg3, #e4ddd0);
-}
-
-/* Nav links in overlay */
-.nav-mobile-menu a {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.5rem, 10vw, 3.5rem);
-  letter-spacing: .08em;
-  color: var(--green, #1e3d1c);
-  text-decoration: none;
-  line-height: 1;
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity .35s, transform .35s, color .2s;
-}
-.nav-mobile-menu.open a { opacity: 1; transform: none; }
-.nav-mobile-menu.open a:nth-child(2) { transition-delay: .05s; }
-.nav-mobile-menu.open a:nth-child(3) { transition-delay: .10s; }
-.nav-mobile-menu.open a:nth-child(4) { transition-delay: .15s; }
-.nav-mobile-menu.open a:nth-child(5) { transition-delay: .20s; }
-.nav-mobile-menu.open a:nth-child(6) { transition-delay: .25s; }
-.nav-mobile-menu.open a:nth-child(7) { transition-delay: .30s; }
-.nav-mobile-menu a:hover { color: var(--green3, #3a7336); }
-.nav-mobile-menu .nav-mobile-cta {
-  font-size: clamp(1.2rem, 5vw, 1.5rem);
-  color: var(--green3, #3a7336);
-  border: 1.5px solid var(--green3, #3a7336);
-  padding: .6rem 2rem;
-  border-radius: 4px;
-  letter-spacing: .1em;
-  transition: background .2s, color .2s, border-color .2s;
-}
-.nav-mobile-menu .nav-mobile-cta:hover {
-  background: var(--green, #1e3d1c);
-  color: var(--cream, #f5f0e8);
-  border-color: var(--green, #1e3d1c);
-}
-
-/* ── RESPONSIVE: <768px ── */
-@media (max-width: 768px) {
-  /* Hide desktop nav elements */
-  .nav-links { display: none !important; }
-  .nav-cta   { display: none !important; }
-  .nav-back  { display: none !important; }  /* project pages */
-
-  /* Show hamburger */
-  .nav-hamburger { display: flex; }
-
-  /* Prevent body scroll when menu open */
-  body.nav-open { overflow: hidden; }
-
-  /* Ensure nav doesn't clip on small screens */
-  nav {
-    padding: 1rem 1.25rem !important;
-    flex-wrap: nowrap;
-    overflow: visible;
-  }
-}
+/* Mobile nav (hamburger + full-screen overlay) now lives solely in
+   shared.css, including the .nav-back rule this page's copy had added to
+   the <768px query (kept, since project pages use .nav-back). This block
+   was a byte-for-byte duplicate that was silently overriding shared.css. */
 
 /* ── SCROLL-TRIGGERED TEXT REPLACEMENT ── */
 .scroll-swap-wrap{

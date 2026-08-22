@@ -14,8 +14,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;background:var(--green3);transform:scaleX(0);transition:transform .25s;}
 .nav-links a:hover,.nav-links a.active{color:var(--green);}
 .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
-.nav-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--cream);padding:.55rem 1.3rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:background .2s;}
-.nav-cta:hover{background:var(--green2);}
+.nav-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--cream);padding:.55rem 1.3rem;border-radius:4px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .2s;}
+.nav-cta:hover{background:var(--green2);transform:translateY(-1px);}
 
 /* ── MOBILE NAV ── */
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:.5rem;margin-left:auto;flex-shrink:0;z-index:210;}
@@ -41,6 +41,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 @media(max-width:768px){
   .nav-links{display:none!important;}
   .nav-cta{display:none!important;}
+  .nav-back{display:none!important;} /* project pages */
   .nav-hamburger{display:flex;}
   body.nav-open{overflow:hidden;}
   nav{padding:1rem 1.25rem!important;flex-wrap:nowrap;overflow:visible;}
@@ -48,4 +49,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 
 /* ── REVEAL (scroll-in animation, driven by shared.js initReveal) ── */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.23,1,.32,1),transform .7s cubic-bezier(.23,1,.32,1);}
+.reveal.up{transform:translateX(-28px);}
 .reveal.vis{opacity:1;transform:none;}
+
+/* ── CASE STUDY MODAL (markup built dynamically by shared.js initCaseModals) ──
+   Was previously unstyled: the JS created #caseModal/.case-panel etc. but no
+   page defined CSS for them, so the modal rendered as unstyled full-width
+   content instead of a centered overlay dialog. Styled here since the modal
+   is shared UI used by every page that has [data-case] triggers. */
+.case-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s;}
+.case-modal--open{opacity:1;visibility:visible;pointer-events:all;}
+.case-overlay{position:absolute;inset:0;background:rgba(26,35,24,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+.case-panel{position:relative;z-index:1;width:100%;max-width:720px;max-height:86vh;overflow-y:auto;background:var(--cream);border-radius:8px;border:1px solid var(--border2);padding:3rem;transform:translateY(16px);transition:transform .3s ease;}
+.case-modal--open .case-panel{transform:none;}
+.case-close{position:absolute;top:1.25rem;right:1.25rem;width:38px;height:38px;border:1.5px solid var(--border2);border-radius:6px;background:var(--bg2);color:var(--muted);font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s,background .2s;}
+.case-close:hover{border-color:var(--green3);color:var(--green);background:var(--bg3);}
+.case-label{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--green3);margin-bottom:.75rem;}
+.case-title{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.04em;color:var(--green);margin-bottom:.5rem;line-height:1.05;}
+.case-subtitle{font-size:.92rem;line-height:1.7;color:var(--muted);max-width:520px;margin-bottom:2.25rem;}
+.process-timeline{display:flex;flex-direction:column;gap:1.75rem;margin-bottom:2rem;}
+.process-step-item{display:grid;grid-template-columns:auto 1fr;gap:1.25rem;}
+.ps-marker{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--green3);width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ps-step-title{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:.35rem;}
+.ps-step-desc{font-size:.82rem;line-height:1.65;color:var(--muted);margin-bottom:.85rem;}
+.ps-step-img{border-radius:6px;overflow:hidden;}
+.step-placeholder{min-height:120px;display:flex;align-items:center;justify-content:center;text-align:center;padding:1rem;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,240,232,.7);}
+.case-actions{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;padding-top:.5rem;border-top:1px solid var(--border);}
+.case-link{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--muted);background:none;border:none;cursor:pointer;padding:0;transition:color .2s;}
+.case-link:hover{color:var(--green);}
+.case-link--primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:var(--cream);padding:.85rem 1.75rem;border-radius:4px;transition:background .2s;}
+.case-link--primary:hover{background:var(--green2);color:var(--cream);}
+@media(max-width:600px){
+  .case-panel{padding:2rem 1.5rem;}
+  .case-title{font-size:1.9rem;}
+  .process-step-item{grid-template-columns:1fr;}
+}
