@@ -1288,11 +1288,9 @@ footer{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 /* ── LOADER ── */
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('loader').classList.add('hidden');
-  }, 900);
-});
+const hideLoader = () => document.getElementById('loader')?.classList.add('hidden');
+window.addEventListener('load', () => setTimeout(hideLoader, 900), { once: true });
+setTimeout(hideLoader, 1600);
 
 /* ── MARQUEE ── */
 const mItems = ['BRANDING','MOTION','3D','VISUAL DESIGN'];
