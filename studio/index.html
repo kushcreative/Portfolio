@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kushal — Graphic Designer · 3D Artist · Animator</title>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
-<link rel="alternate icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/studio/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/studio/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/studio/favicon-64.png">
+<link rel="alternate icon" href="/studio/favicon.ico">
 <meta name="description" content="Kushal — Graphic designer, 3D artist and motion graphics creator based in India. Available for freelance branding, 3D visualization and motion projects.">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="/studio/shared.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -848,6 +848,26 @@ footer{
   .scroll-swap-static{font-size:.95rem;}
 }
 
+/* Motion section repair: retain the existing Studio palette and layout while
+   unavailable source media is represented without broken network requests. */
+.scroll-swap-fallback{background:radial-gradient(circle at 48% 44%,rgba(74,124,67,.32),transparent 42%),linear-gradient(135deg,#172315,#0e170d 68%,#243520)}
+.motion-sec{padding:6rem 3rem;background:var(--bg2);border-block:1px solid var(--border)}
+.motion-header{max-width:1200px;margin:0 auto 2.5rem;display:flex;align-items:end;justify-content:space-between;gap:2rem}
+.motion-layout{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(240px,.85fr);gap:1.25rem}
+.motion-cinematic{display:grid;gap:1.25rem}.motion-reels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.video-wrap{position:relative;overflow:hidden;border:1px solid var(--border2);border-radius:10px;background:linear-gradient(145deg,var(--bg3),#dce4d7);box-shadow:0 18px 44px rgba(30,61,28,.08)}
+.video-wrap--169{aspect-ratio:16/9}.video-wrap--916{aspect-ratio:9/16}
+.video-wrap video,.video-poster{position:absolute;inset:0;width:100%;height:100%}.video-wrap video{object-fit:cover}
+.video-poster{display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(74,124,67,.2),transparent 34%),linear-gradient(135deg,rgba(245,240,232,.82),rgba(226,233,220,.94));pointer-events:none}
+.video-poster:before{content:"";position:absolute;inset:12px;border:1px solid rgba(74,124,67,.2);border-radius:7px;background:repeating-linear-gradient(90deg,transparent 0 34px,rgba(74,124,67,.035) 34px 35px)}
+.video-play{position:relative;z-index:1;padding:.55rem .8rem;border:1px solid var(--border2);border-radius:999px;background:rgba(245,240,232,.88);color:var(--green);font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.video-badge{position:absolute;top:14px;right:14px;z-index:3;padding:.35rem .5rem;border-radius:3px;background:var(--green);color:var(--cream);font-size:.55rem;font-weight:700;letter-spacing:.1em}
+.video-meta{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:3rem 1rem 1rem;background:linear-gradient(transparent,rgba(20,32,18,.86));color:var(--cream);pointer-events:none}
+.video-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.05em}.video-tag{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;opacity:.72}
+.video-wrap--unavailable{cursor:default}.video-wrap--unavailable video{display:none}
+@media(max-width:900px){.motion-layout{grid-template-columns:1fr}.motion-reels{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.motion-sec{padding:4rem 1.25rem}.motion-header{align-items:flex-start;flex-direction:column}.motion-reels{grid-template-columns:1fr}.video-wrap--916{aspect-ratio:16/10}}
+
 </style>
 </head>
 <body>
@@ -859,15 +879,15 @@ footer{
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo">KUSHAL.<div class="nav-logo-dot"></div></a>
+  <a href="/studio" class="nav-logo">KUSHAL.<div class="nav-logo-dot"></div></a>
     <ul class="nav-links">
-    <li><a href="/" class="active">Home</a></li>
-    <li><a href="/work">Work</a></li>
-    <li><a href="/creative-os">Creative OS</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/contact">Contact</a></li>
+    <li><a href="/studio" class="active">Home</a></li>
+    <li><a href="/studio/work">Work</a></li>
+    <li><a href="/studio/creative-os">Creative OS</a></li>
+    <li><a href="/studio/about">About</a></li>
+    <li><a href="/studio/contact">Contact</a></li>
   </ul>
-  <a href="/contact" class="nav-cta">Hire Me ↗</a>
+  <a href="/studio/contact" class="nav-cta">Hire Me ↗</a>
   <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
@@ -875,12 +895,12 @@ footer{
 <!-- MOBILE MENU OVERLAY -->
 <div class="nav-mobile-menu" id="navMobileMenu" role="dialog" aria-modal="true" aria-label="Navigation">
   <button class="nav-mobile-close" id="navMobileClose" aria-label="Close navigation">✕</button>
-  <a href="/">Home</a>
-  <a href="/work">Work</a>
-  <a href="/creative-os">Creative OS</a>
-  <a href="/about">About</a>
-  <a href="/contact">Contact</a>
-  <a href="/contact" class="nav-mobile-cta">Hire Me ↗</a>
+  <a href="/studio">Home</a>
+  <a href="/studio/work">Work</a>
+  <a href="/studio/creative-os">Creative OS</a>
+  <a href="/studio/about">About</a>
+  <a href="/studio/contact">Contact</a>
+  <a href="/studio/contact" class="nav-mobile-cta">Hire Me ↗</a>
 </div>
 
 <!-- HERO -->
@@ -898,14 +918,14 @@ footer{
     </div>
     <p class="hero-desc reveal">Creating visual experiences through branding,<br>motion graphics and immersive 3D design.</p>
     <div class="hero-btns reveal">
-      <a href="/work" class="btn-fill">View Work ↗</a>
-      <a href="/contact" class="btn-outline">Start a Project →</a>
+      <a href="/studio/work" class="btn-fill">View Work ↗</a>
+      <a href="/studio/contact" class="btn-outline">Start a Project →</a>
     </div>
   </div>
   <div class="hero-right">
     <div class="crt-wrap" role="img" aria-label="Vintage CRT monitor with a slowly rotating abstract sculpture inside the screen — decorative">
       <div class="crt-glow" aria-hidden="true"></div>
-      <img src="/crt-monitor.jpg" alt="" class="crt-body-img" aria-hidden="true" draggable="false">
+      <img src="/studio/crt-monitor.jpg" alt="" class="crt-body-img" aria-hidden="true" draggable="false">
       <div class="crt-screen" id="crtScreen">
         <canvas id="heroCanvas" aria-hidden="true"></canvas>
         <div class="crt-scanlines" aria-hidden="true"></div>
@@ -1018,7 +1038,7 @@ footer{
         </div>
       </div>
       <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
-        <a href="/project-nexora" class="feat-cta reveal">View Case Study →</a>
+        <a href="/studio/project-nexora" class="feat-cta reveal">View Case Study →</a>
         <button type="button" class="btn-process reveal" data-case="nexora" style="font-size:.72rem;">Behind the Scenes ↗</button>
       </div>
     </div>
@@ -1032,10 +1052,10 @@ footer{
       <p class="sec-label reveal">Selected Work</p>
       <h2 class="sec-title reveal">More <span>Projects</span></h2>
     </div>
-    <a href="/work" class="view-all reveal">View All Work ↗</a>
+    <a href="/studio/work" class="view-all reveal">View All Work ↗</a>
   </div>
   <div class="work-grid reveal">
-    <a href="/project-chronex" class="work-card">
+    <a href="/studio/project-chronex" class="work-card">
       <canvas class="work-canvas" data-idx="2" aria-label="CHRONEX product render preview"></canvas>
       <div class="work-hover-overlay" aria-hidden="true"></div>
       <span class="work-badge">3D Art</span>
@@ -1046,7 +1066,7 @@ footer{
         <p class="work-cta-line"><button type="button" class="btn-process btn-process--inline" data-case="chronex" onclick="event.preventDefault();event.stopPropagation();">Behind the Scenes ↗</button></p>
       </div>
     </a>
-    <a href="/project-echoes" class="work-card">
+    <a href="/studio/project-echoes" class="work-card">
       <canvas class="work-canvas" data-idx="3" aria-label="ECHOES motion graphics preview"></canvas>
       <div class="work-hover-overlay" aria-hidden="true"></div>
       <div class="work-arrow" aria-hidden="true">↗</div>
@@ -1056,7 +1076,7 @@ footer{
         <p class="work-cta-line">View Case Study →</p>
       </div>
     </a>
-    <a href="/project-nexora" class="work-card">
+    <a href="/studio/project-nexora" class="work-card">
       <canvas class="work-canvas" data-idx="0" aria-label="NEXORA brand identity preview"></canvas>
       <div class="work-hover-overlay" aria-hidden="true"></div>
       <span class="work-badge">Branding</span>
@@ -1073,7 +1093,7 @@ footer{
 <!-- SCROLL-TRIGGERED TEXT REPLACEMENT -->
 <section class="scroll-swap-wrap" id="scrollSwap">
   <div class="scroll-swap-sticky">
-    <video class="scroll-swap-video" src="assets/videos/emerald-leather-macro.mp4" muted autoplay loop playsinline aria-hidden="true"></video>
+    <div class="scroll-swap-video scroll-swap-fallback" aria-hidden="true"></div>
     <div class="scroll-swap-content">
       <p class="scroll-swap-static">I made for</p>
       <span class="scroll-swap-anchor" aria-hidden="true"></span>
@@ -1095,17 +1115,15 @@ footer{
       <p class="sec-label reveal">Motion & Animation</p>
       <h2 class="sec-title reveal">Cinematic <span>Reels</span></h2>
     </div>
-    <a href="/work" class="view-all reveal">View All Motion ↗</a>
+    <a href="/studio/work" class="view-all reveal">View All Motion ↗</a>
   </div>
   <div class="motion-layout reveal">
     <div class="motion-cinematic">
       <div class="video-wrap video-wrap--169">
         <span class="video-badge">4K · 16:9</span>
-        <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
-          data-lazy-src="assets/videos/showreel-cinematic-4k.mp4"
-          data-lazy-poster="assets/videos/showreel-cinematic-poster.jpg"
+        <video class="lazy lazy-shimmer" muted loop playsinline preload="none" data-media-missing="true"
           aria-label="Cinematic showreel — 4K horizontal"></video>
-        <div class="video-poster"><div class="video-play">▶</div></div>
+        <div class="video-poster"><div class="video-play">Media pending</div></div>
         <div class="video-meta">
           <div class="video-title">Showreel</div>
           <div class="video-tag">Motion · 3D · Brand Film</div>
@@ -1113,11 +1131,9 @@ footer{
       </div>
       <div class="video-wrap video-wrap--169">
         <span class="video-badge">4K · 16:9</span>
-        <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
-          data-lazy-src="assets/videos/nexora-brand-film-4k.mp4"
-          data-lazy-poster="assets/videos/nexora-brand-film-poster.jpg"
+        <video class="lazy lazy-shimmer" muted loop playsinline preload="none" data-media-missing="true"
           aria-label="NEXORA brand film — 4K"></video>
-        <div class="video-poster"><div class="video-play">▶</div></div>
+        <div class="video-poster"><div class="video-play">Media pending</div></div>
         <div class="video-meta">
           <div class="video-title">NEXORA Brand Film</div>
           <div class="video-tag">Branding · Animation</div>
@@ -1127,11 +1143,9 @@ footer{
     <div class="motion-reels">
       <div class="video-wrap video-wrap--916">
         <span class="video-badge">4K · 9:16</span>
-        <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
-          data-lazy-src="assets/videos/chronex-reel-4k.mp4"
-          data-lazy-poster="assets/videos/chronex-reel-poster.jpg"
+        <video class="lazy lazy-shimmer" muted loop playsinline preload="none" data-media-missing="true"
           aria-label="CHRONEX vertical reel — 4K"></video>
-        <div class="video-poster"><div class="video-play">▶</div></div>
+        <div class="video-poster"><div class="video-play">Media pending</div></div>
         <div class="video-meta">
           <div class="video-title">CHRONEX Reel</div>
           <div class="video-tag">Product · 3D</div>
@@ -1139,11 +1153,9 @@ footer{
       </div>
       <div class="video-wrap video-wrap--916">
         <span class="video-badge">4K · 9:16</span>
-        <video class="lazy lazy-shimmer" muted loop playsinline preload="none"
-          data-lazy-src="assets/videos/echoes-motion-4k.mp4"
-          data-lazy-poster="assets/videos/echoes-motion-poster.jpg"
+        <video class="lazy lazy-shimmer" muted loop playsinline preload="none" data-media-missing="true"
           aria-label="ECHOES motion reel — 4K"></video>
-        <div class="video-poster"><div class="video-play">▶</div></div>
+        <div class="video-poster"><div class="video-play">Media pending</div></div>
         <div class="video-meta">
           <div class="video-title">ECHOES Motion</div>
           <div class="video-tag">Motion Graphics</div>
@@ -1191,7 +1203,7 @@ footer{
         <div><div class="ap-stat-num">3+</div><div class="ap-stat-label">Years Creating</div></div>
         <div><div class="ap-stat-num">5+</div><div class="ap-stat-label">Creative Tools</div></div>
       </div>
-      <a href="/about" class="about-prev-cta reveal">Read Full Story ↗</a>
+      <a href="/studio/about" class="about-prev-cta reveal">Read Full Story ↗</a>
     </div>
     <div class="about-prev-right reveal">
       <div class="exp-mini">
@@ -1226,7 +1238,7 @@ footer{
       LET'S BUILD<br>SOMETHING<br><span>REMARKABLE.</span>
     </h2>
     <div class="footer-cta-row">
-      <a href="/contact" class="footer-cta-link">Email ↗</a>
+      <a href="/studio/contact" class="footer-cta-link">Email ↗</a>
       <span class="footer-cta-sep">—</span>
       <a href="https://instagram.com/" target="_blank" rel="noopener" class="footer-cta-link">Instagram ↗</a>
       <span class="footer-cta-sep">—</span>
@@ -1243,16 +1255,16 @@ footer{
     <div>
       <p class="ft-col-label">Navigation</p>
       <div class="ft-col-links">
-        <a href="/work" class="ft-col-link">Work</a>
-        <a href="/creative-os" class="ft-col-link">Creative OS</a>
-        <a href="/about" class="ft-col-link">About</a>
-        <a href="/contact" class="ft-col-link">Contact</a>
+        <a href="/studio/work" class="ft-col-link">Work</a>
+        <a href="/studio/creative-os" class="ft-col-link">Creative OS</a>
+        <a href="/studio/about" class="ft-col-link">About</a>
+        <a href="/studio/contact" class="ft-col-link">Contact</a>
       </div>
     </div>
     <div>
       <p class="ft-col-label">Connect</p>
       <div class="ft-col-links">
-        <a href="/contact" class="ft-col-link">Email</a>
+        <a href="/studio/contact" class="ft-col-link">Email</a>
         <a href="https://instagram.com/" target="_blank" rel="noopener" class="ft-col-link">Instagram</a>
         <a href="https://behance.net/" target="_blank" rel="noopener" class="ft-col-link">Behance</a>
       </div>
@@ -1260,9 +1272,9 @@ footer{
     <div>
       <p class="ft-col-label">Specialisms</p>
       <div class="ft-col-links">
-        <a href="/work" class="ft-col-link">Brand Identity</a>
-        <a href="/work" class="ft-col-link">3D Art</a>
-        <a href="/work" class="ft-col-link">Motion Graphics</a>
+        <a href="/studio/work" class="ft-col-link">Brand Identity</a>
+        <a href="/studio/work" class="ft-col-link">3D Art</a>
+        <a href="/studio/work" class="ft-col-link">Motion Graphics</a>
       </div>
     </div>
   </div>
@@ -1535,7 +1547,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 </script>
-<script src="shared.js"></script>
+<script src="/studio/shared.js"></script>
 <script>
 </script>
 

@@ -9,6 +9,7 @@
     { "source": "/tva", "destination": "/tva/index.html" },
     { "source": "/tva/work", "destination": "/tva/work.html" },
     { "source": "/tva/creative-os", "destination": "/tva/creative-os.html" },
+    { "source": "/tva/lab", "destination": "/tva/creative-os.html" },
     { "source": "/tva/about", "destination": "/tva/about.html" },
     { "source": "/tva/contact", "destination": "/tva/contact.html" },
     { "source": "/tva/project-nexora", "destination": "/tva/project-nexora.html" },

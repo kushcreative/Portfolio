@@ -49,6 +49,11 @@
       const video = wrap.querySelector('video');
       const poster = wrap.querySelector('.video-poster');
       if (!video) return;
+      if (video.dataset.mediaMissing === 'true') {
+        wrap.classList.add('video-wrap--unavailable');
+        wrap.setAttribute('aria-disabled', 'true');
+        return;
+      }
 
       wrap.addEventListener('click', () => {
         if (!video.src && video.dataset.lazySrc) {
@@ -94,7 +99,7 @@
           color: '#3a7336',
         },
       ],
-      projectUrl: '/project-nexora',
+      projectUrl: '/studio/project-nexora',
     },
     chronex: {
       title: 'CHRONEX',
@@ -122,7 +127,7 @@
           color: '#284a70',
         },
       ],
-      projectUrl: '/project-chronex',
+      projectUrl: '/studio/project-chronex',
     },
   };
 
