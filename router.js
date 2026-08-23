@@ -39,7 +39,7 @@
     ? navigation.type === 'reload'
     : performance.navigation && performance.navigation.type === 1;
 
-  if (isReload) {
+  if (isReload && suffix === '') {
     location.replace(`${targetPath}${location.search}${location.hash}`);
     return;
   }
