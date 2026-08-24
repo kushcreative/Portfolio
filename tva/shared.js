@@ -1,5 +1,5 @@
 void import('/router.js');
-const motionReady=import('/motion.js?v=tva-card-render-fix');
+const motionReady=import('/motion.js?v=mobile-tap-flip');
 
 (()=>{'use strict';
 const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>[...c.querySelectorAll(s)];

@@ -373,6 +373,7 @@ function initTVACard() {
   let dragSafetyTimer;
   let activePointerId;
   let dragging = false;
+  let suppressClick = false;
   let dragDistance = 0;
   let startX = 0;
   let startY = 0;
@@ -452,6 +453,7 @@ function initTVACard() {
       if (!dragging) return;
       dragging = false;
       dragDistance = Math.max(dragDistance, 7);
+      suppressClick = true;
       scene.classList.remove('is-dragging');
       if (activePointerId !== undefined && scene.hasPointerCapture(activePointerId)) {
         scene.releasePointerCapture(activePointerId);
@@ -465,6 +467,7 @@ function initTVACard() {
     if (event.button !== 0) return;
     stop();
     dragging = true;
+    suppressClick = false;
     dragDistance = 0;
     startX = event.clientX;
     startY = event.clientY;
@@ -481,6 +484,7 @@ function initTVACard() {
       const dx = event.clientX - startX;
       const dy = event.clientY - startY;
       dragDistance = Math.max(dragDistance, Math.hypot(dx, dy));
+      if (dragDistance >= 7) suppressClick = true;
       springTo({
         rx: clamp(startRX - dy * 0.2, -18, 18),
         ry: startRY + dx * 0.72,
@@ -502,6 +506,7 @@ function initTVACard() {
   const release = (event) => {
     if (!dragging) return;
     dragging = false;
+    if (event?.type !== 'pointerup' || dragDistance >= 7) suppressClick = true;
     clearTimeout(dragSafetyTimer);
     scene.classList.remove('is-dragging');
     const pointerId = event?.pointerId ?? activePointerId;
@@ -509,12 +514,20 @@ function initTVACard() {
       scene.releasePointerCapture(pointerId);
     }
     activePointerId = undefined;
-    settle(dragDistance < 7);
+    settle(false);
   };
 
   scene.addEventListener('pointerup', release);
   scene.addEventListener('pointercancel', release);
   scene.addEventListener('lostpointercapture', release);
+  scene.addEventListener('click', (event) => {
+    if (suppressClick) {
+      suppressClick = false;
+      event.preventDefault();
+      return;
+    }
+    settle(true);
+  });
   window.addEventListener('pointerup', release, true);
   window.addEventListener('pointercancel', release, true);
   window.addEventListener('blur', () => {
