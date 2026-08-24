@@ -1,7 +1,6 @@
 import {
   animate,
   hover,
-  inView,
   press,
   scroll,
   stagger,
@@ -9,125 +8,238 @@ import {
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const spring = { type: 'spring', stiffness: 360, damping: 30, mass: 0.7 };
-const gentleSpring = { type: 'spring', stiffness: 190, damping: 25, mass: 0.85 };
 
 function elements(selector, root = document) {
   return [...root.querySelectorAll(selector)];
 }
 
+function unique(items) {
+  return [...new Set(items.filter(Boolean))];
+}
+
 function markManaged(items) {
   items.forEach((item) => {
     item.dataset.motionManaged = 'true';
+    if (item.classList.contains('reveal')) {
+      item.style.transition = 'none';
+      item.style.opacity = '1';
+      item.style.transform = 'none';
+      item.classList.add('vis', 'visible');
+    }
   });
   return items;
 }
 
-function reveal(items, options = {}) {
-  const targets = markManaged(items.filter(Boolean));
+function linkToScroll(targets, keyframes, options = {}) {
+  const items = markManaged((Array.isArray(targets) ? targets : [targets]).filter(Boolean));
+  if (!items.length) return;
+
+  const {
+    target = items[0],
+    offset = ['start end', 'start 0.58'],
+    delay,
+    ease = [0.22, 1, 0.36, 1],
+  } = options;
+
+  const animation = animate(items, keyframes, {
+    duration: 1,
+    delay,
+    ease,
+  });
+
+  animation.pause();
+  scroll((progress) => {
+    animation.time = progress * animation.duration;
+  }, { target, offset });
+}
+
+function scrollReveal(items, options = {}) {
+  const targets = items.filter(Boolean);
   if (!targets.length) return;
 
   const {
-    trigger = targets[0],
-    distance = 20,
-    interval = 0.065,
-    duration = 0.72,
+    target = targets[0],
+    distance = 42,
+    interval = 0.055,
+    offset = ['start 0.96', 'start 0.58'],
+    scale = 0.985,
   } = options;
 
-  targets.forEach((target) => {
-    target.style.willChange = 'transform, opacity';
-  });
-
-  inView(
-    trigger,
-    () => {
-      const controls = animate(
-        targets,
-        { opacity: [0, 1], y: [distance, 0] },
-        {
-          duration,
-          delay: stagger(interval),
-          ease: [0.22, 1, 0.36, 1],
-        }
-      );
-
-      controls.then(() => {
-        targets.forEach((target) => {
-          target.style.willChange = 'auto';
-        });
-      });
+  linkToScroll(
+    targets,
+    {
+      opacity: [0, 1],
+      y: [distance, 0],
+      scale: [scale, 1],
     },
-    { amount: 0.12 }
+    {
+      target,
+      offset,
+      delay: stagger(interval),
+    }
   );
 }
 
-function initHero() {
-  const studioHero = document.querySelector('.hero-left');
+function initHeroScroll() {
+  const studioHero = document.querySelector('.hero-left')?.closest('.hero');
   if (studioHero) {
-    reveal(elements(':scope > *', studioHero), {
-      trigger: studioHero,
-      distance: 24,
-      interval: 0.085,
+    const eyebrow = studioHero.querySelector('.hero-eyebrow');
+    const title = studioHero.querySelector('.hero-name');
+    const positioning = studioHero.querySelector('.hero-positioning');
+    const description = studioHero.querySelector('.hero-desc');
+    const buttons = studioHero.querySelector('.hero-btns');
+    const visual = studioHero.querySelector('.hero-right');
+
+    linkToScroll(eyebrow, { opacity: [1, 0.28], y: [0, -26] }, {
+      target: studioHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
     });
-
-    const visual = document.querySelector('.hero-right');
-    if (visual) {
-      markManaged([visual]);
-      animate(
-        visual,
-        { opacity: [0, 1], x: [28, 0], scale: [0.97, 1] },
-        { duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }
-      );
-    }
-
-    const crt = document.querySelector('.crt-wrap');
-    if (crt) {
-      scroll(
-        animate(crt, { y: [-8, 14] }, { ease: 'linear' }),
-        { target: studioHero.closest('.hero'), offset: ['start start', 'end start'] }
-      );
-    }
+    linkToScroll(title, { y: [0, -78], scale: [1, 0.9], opacity: [1, 0.62] }, {
+      target: studioHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(positioning, { y: [0, -48], opacity: [1, 0.38] }, {
+      target: studioHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(description, { y: [0, -34], opacity: [1, 0.24] }, {
+      target: studioHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(buttons, { y: [0, -18], opacity: [1, 0.18] }, {
+      target: studioHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(visual, { y: [0, 84], x: [0, 18], scale: [1, 1.055], rotateZ: [0, 1.15] }, {
+      target: studioHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
   }
 
-  const tvaHeroCopy = document.querySelector('.site-main .hero > div:first-child');
-  if (tvaHeroCopy) {
-    markManaged([tvaHeroCopy]);
-    animate(tvaHeroCopy, { opacity: 1, y: 0 }, { duration: 0.01 });
-    reveal(elements(':scope > *', tvaHeroCopy), {
-      trigger: tvaHeroCopy,
-      distance: 20,
-      interval: 0.075,
-    });
+  const tvaHero = document.querySelector('.site-main .hero');
+  if (tvaHero) {
+    const copy = tvaHero.querySelector(':scope > div:first-child');
+    const cardStage = tvaHero.querySelector('.id-card-stage');
+    const label = copy?.querySelector('.tech-label');
+    const title = copy?.querySelector('.display');
+    const description = copy?.querySelector('.lead');
+    const roles = copy?.querySelector('.roles');
+    const button = copy?.querySelector('.btn');
 
-    const cardStage = document.querySelector('.id-card-stage');
+    if (copy) {
+      markManaged([copy]);
+      copy.style.opacity = '1';
+      copy.style.transform = 'none';
+    }
     if (cardStage) {
       markManaged([cardStage]);
-      animate(
-        cardStage,
-        { opacity: [0, 1], x: [24, 0], scale: [0.97, 1] },
-        { duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }
-      );
+      cardStage.style.opacity = '1';
+      cardStage.style.transform = 'none';
     }
+
+    linkToScroll(label, { opacity: [1, 0.25], y: [0, -22] }, {
+      target: tvaHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(title, { y: [0, -72], scale: [1, 0.91], opacity: [1, 0.58] }, {
+      target: tvaHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(description, { y: [0, -38], opacity: [1, 0.3] }, {
+      target: tvaHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(roles, { y: [0, -24], opacity: [1, 0.3] }, {
+      target: tvaHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(button, { y: [0, -12], opacity: [1, 0.2] }, {
+      target: tvaHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(cardStage, { y: [0, 74], x: [0, 16], scale: [1, 1.04], rotateZ: [0, 1.25] }, {
+      target: tvaHero,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
   }
 }
 
-function initPageEntrances() {
-  const path = location.pathname.replace(/\/(?:index\.html)?$/, '') || '/';
-  const isWork = /\/(?:studio|tva)\/work$/.test(path);
-  const isContact = /\/(?:studio|tva)\/contact$/.test(path);
+function initPageHeaderScroll() {
+  const headers = unique(elements('.page-header, .page-hero, .contact-hero, .proj-hero, .project-hero'));
 
-  if (isWork || isContact) {
-    const header = document.querySelector(isContact ? '.contact-hero, .page-hero' : '.page-header, .page-hero');
-    if (header) {
-      reveal(elements(':scope > *', header), {
-        trigger: header,
-        distance: 18,
-        interval: 0.08,
-      });
-    }
-  }
+  headers.forEach((header) => {
+    const title = header.querySelector('.page-title, .ch-title, .proj-title, .project-title, h1');
+    const copy = header.querySelector('.page-desc, .ch-sub, .project-tagline, .proj-sub');
+    const label = header.querySelector('.eyebrow, .ch-label, .proj-label, .tech-label');
+    const number = header.querySelector('.file-number');
+    const visual = header.querySelector('canvas, .project-visual, img');
+
+    linkToScroll(title, { y: [0, -64], scale: [1, 0.94], opacity: [1, 0.6] }, {
+      target: header,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(copy, { y: [0, -30], opacity: [1, 0.38] }, {
+      target: header,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(label, { y: [0, -18], opacity: [1, 0.3] }, {
+      target: header,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(number, { y: [0, 84], rotateZ: [0, 2.5] }, {
+      target: header,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+    linkToScroll(visual, { y: [0, 46], scale: [1, 1.035] }, {
+      target: header,
+      offset: ['start start', 'end start'],
+      ease: 'linear',
+    });
+  });
 }
 
-function initWork() {
+function initSectionScroll() {
+  const sections = unique(elements('main section, .site-main section')).filter(
+    (section) => !section.matches('.hero, .page-hero, .contact-hero, .project-hero, .proj-hero, .scroll-swap-wrap')
+  );
+
+  sections.forEach((section) => {
+    linkToScroll(section, { opacity: [0.72, 1], y: [30, 0], scale: [0.992, 1] }, {
+      target: section,
+      offset: ['start 0.98', 'start 0.58'],
+    });
+  });
+
+  const titles = unique(elements('.sec-title, .section-title')).filter(
+    (title) => !title.closest('.hero, .page-hero, .contact-hero, .project-hero, .proj-hero')
+  );
+
+  titles.forEach((title) => {
+    linkToScroll(title, { opacity: [0.2, 1, 0.82], y: [48, 0, -18], scale: [0.965, 1, 0.99] }, {
+      target: title.closest('section') || title,
+      offset: ['start 0.96', 'center 0.58', 'end 0.12'],
+      ease: 'linear',
+    });
+  });
+}
+
+function initWorkScroll() {
   const groups = [
     ['.projects-grid', ':scope > .proj-card'],
     ['.work-grid', ':scope > .work-card'],
@@ -137,35 +249,51 @@ function initWork() {
   groups.forEach(([containerSelector, childSelector]) => {
     elements(containerSelector).forEach((container) => {
       const cards = elements(childSelector, container);
-      if (!cards.length) return;
-      reveal(cards, {
-        trigger: container,
-        distance: 26,
-        interval: 0.09,
-        duration: 0.78,
+      cards.forEach((card, index) => {
+        const angle = index % 2 === 0 ? -1.15 : 1.15;
+        linkToScroll(
+          card,
+          {
+            opacity: [0, 1, 1],
+            y: [58, 0, -12],
+            scale: [0.968, 1, 1],
+            rotateZ: [angle, 0, -angle * 0.18],
+          },
+          {
+            target: container,
+            offset: ['start 0.96', 'center 0.54'],
+            delay: index * 0.065,
+          }
+        );
       });
     });
   });
 
-  const cards = elements('.proj-card, .work-card, .record');
-  if (cards.length) {
-    hover(cards, (card) => {
-      animate(card, { y: -5, scale: 1.008 }, gentleSpring);
-      return () => animate(card, { y: 0, scale: 1 }, gentleSpring);
-    });
-  }
-
-  elements('.proj-card, .record').forEach((card) => {
-    const media = card.querySelector('.proj-thumb, canvas');
+  const cards = unique(elements('.proj-card, .work-card, .record'));
+  cards.forEach((card) => {
+    const media = card.querySelector('.proj-thumb, canvas, img');
     if (!media) return;
-    scroll(
-      animate(media, { y: [-6, 6], scale: [1.012, 1.012] }, { ease: 'linear' }),
-      { target: card, offset: ['start end', 'end start'] }
-    );
+    linkToScroll(media, { y: [-14, 16], scale: [1.025, 1.025] }, {
+      target: card,
+      offset: ['start end', 'end start'],
+      ease: 'linear',
+    });
+  });
+
+  unique(elements('.project-visual, .video-wrap, .branding-item, .gallery-item')).forEach((visual, index) => {
+    linkToScroll(visual, {
+      y: [-12, 18],
+      scale: [1.012, 1.028],
+      rotateZ: [index % 2 ? 0.35 : -0.35, 0],
+    }, {
+      target: visual,
+      offset: ['start end', 'end start'],
+      ease: 'linear',
+    });
   });
 }
 
-function initContact() {
+function initContactScroll() {
   const form = document.querySelector('#contactForm');
   if (!form) return;
 
@@ -173,36 +301,31 @@ function initContact() {
     ':scope > .reveal, :scope > .form-row, :scope > .field, :scope > .btn, :scope > .tech-label',
     form
   );
-  reveal(fields, {
-    trigger: form,
-    distance: 16,
-    interval: 0.07,
-    duration: 0.64,
+
+  scrollReveal(fields, {
+    target: form,
+    distance: 44,
+    interval: 0.075,
+    offset: ['start 0.96', 'center 0.66'],
+    scale: 0.99,
   });
 }
 
-function initRemainingReveals() {
+function initRemainingScrollReveals() {
   elements('.reveal:not([data-motion-managed])').forEach((item) => {
     const horizontal = item.classList.contains('up');
-    item.dataset.motionManaged = 'true';
-    item.style.willChange = 'transform, opacity';
-    inView(
+    linkToScroll(
       item,
-      () => {
-        const controls = animate(
-          item,
-          {
-            opacity: [0, 1],
-            x: horizontal ? [-20, 0] : 0,
-            y: horizontal ? 0 : [18, 0],
-          },
-          { duration: 0.68, ease: [0.22, 1, 0.36, 1] }
-        );
-        controls.then(() => {
-          item.style.willChange = 'auto';
-        });
+      {
+        opacity: [0, 1],
+        x: horizontal ? [-30, 0] : 0,
+        y: horizontal ? 0 : [36, 0],
+        scale: [0.988, 1],
       },
-      { amount: 0.12 }
+      {
+        target: item,
+        offset: ['start 0.96', 'start 0.66'],
+      }
     );
   });
 }
@@ -215,10 +338,6 @@ function initNavigationAndButtons() {
       return () => animate(link, { y: 0 }, spring);
     });
   }
-
-  elements('.nav-links a.active, .topnav a.active, .rail-nav a.active').forEach((active) => {
-    animate(active, { opacity: [0.62, 1], y: [2, 0] }, { duration: 0.55, ease: 'easeOut' });
-  });
 
   const controls = elements(
     '.btn, .btn-fill, .btn-outline, .nav-cta, .btn-process, .btn-view-proj, .form-submit, .filter-btn, .text-button, .text-link, .section-link'
@@ -240,14 +359,13 @@ function initNavigationAndButtons() {
 }
 
 function initTVACard() {
-  const scene = document.querySelector('[data-motion-tva-id-card], [data-tva-id-card]');
+  const scene = document.querySelector('[data-tva-id-card]');
   const card = scene?.querySelector('.tva-id-card');
   if (!scene || !card) return;
 
-  scene.setAttribute('data-tva-id-card', '');
+  scene.style.animation = 'none';
   const state = { rx: 0, ry: 0 };
   let animation;
-  let autoTimer;
   let dragging = false;
   let dragDistance = 0;
   let startX = 0;
@@ -269,15 +387,13 @@ function initTVACard() {
   const stop = () => {
     animation?.stop();
     animation = undefined;
-    clearTimeout(autoTimer);
   };
 
-  const springTo = (target, onComplete) => {
+  const springTo = (target) => {
     stop();
     if (reducedMotion) {
       Object.assign(state, target);
       render();
-      onComplete?.();
       return;
     }
     animation = animate(state, target, {
@@ -286,32 +402,14 @@ function initTVACard() {
       damping: 27,
       mass: 0.78,
       onUpdate: render,
-      onComplete,
     });
-  };
-
-  const scheduleAuto = () => {
-    if (reducedMotion || dragging) return;
-    clearTimeout(autoTimer);
-    autoTimer = setTimeout(() => {
-      animation = animate(
-        state,
-        { rx: 0, ry: state.ry + 360 },
-        {
-          duration: 34,
-          ease: 'linear',
-          onUpdate: render,
-          onComplete: scheduleAuto,
-        }
-      );
-    }, 1800);
   };
 
   const settle = (flip = false) => {
     const targetY = flip
       ? Math.round(state.ry / 180) * 180 + 180
       : Math.round(state.ry / 180) * 180;
-    springTo({ rx: 0, ry: targetY }, scheduleAuto);
+    springTo({ rx: 0, ry: targetY });
   };
 
   scene.addEventListener('pointerdown', (event) => {
@@ -370,7 +468,6 @@ function initTVACard() {
   });
 
   render();
-  scheduleAuto();
 }
 
 function showReducedMotionContent() {
@@ -389,12 +486,13 @@ function initMotion() {
     return;
   }
 
-  document.documentElement.dataset.motion = 'ready';
-  initHero();
-  initPageEntrances();
-  initWork();
-  initContact();
-  initRemainingReveals();
+  document.documentElement.dataset.motion = 'scroll';
+  initHeroScroll();
+  initPageHeaderScroll();
+  initSectionScroll();
+  initWorkScroll();
+  initContactScroll();
+  initRemainingScrollReveals();
   initNavigationAndButtons();
   initTVACard();
 }
