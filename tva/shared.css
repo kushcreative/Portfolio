@@ -81,3 +81,51 @@ body:has(#heroTime)>footer{width:calc(100% - var(--rail));margin-left:var(--rail
 .id-card-profile dd{color:#e2d5bc;font:600 9px/1.15 "Barlow Condensed",sans-serif;letter-spacing:.11em}
 .id-card-profile dd .status-dot{width:6px;height:6px;margin-right:5px;box-shadow:0 0 6px #6f9b5c}
 @media(max-width:540px){.id-card-profile{padding:9px 16px 8px}.id-card-profile-loki{width:46px;height:46px;margin-bottom:6px}.id-card-profile-loki img{width:204px;transform:translate(-140px,-67px)}.id-card-profile dl div{padding:3px 0 4px}.id-card-profile dt{font-size:5.5px}.id-card-profile dd{font-size:8px}}
+
+/* Use the supplied TVA card artwork as the exact front/back faces. */
+.id-card-face{border:0;background-color:#080706}
+.id-card-face:before,.id-card-face:after{display:none}
+.id-card-front{
+  display:block;
+  padding:0;
+  background-image:url('/tva/assets/tva-card-front-reference.png');
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:113% auto;
+}
+.id-card-front>*:not(.id-card-profile){display:none}
+.id-card-front .id-card-profile{
+  position:absolute;
+  top:61.5%;
+  left:24.4%;
+  z-index:2;
+  width:51.2%;
+  height:24.5%;
+  margin:0;
+  padding:0 4%;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  justify-content:center;
+}
+.id-card-front .id-card-profile-loki{display:none}
+.id-card-front .id-card-profile dl{width:100%;margin:0}
+.id-card-front .id-card-profile dl div{display:block;padding:3px 0 4px;border-bottom:1px solid rgba(210,146,86,.28);text-align:left}
+.id-card-front .id-card-profile dt{margin:0 0 1px;color:#c78a52;font-size:5px;font-weight:600;line-height:1;letter-spacing:.16em}
+.id-card-front .id-card-profile dd{margin:0;color:#dfb376;font:600 7px/1.1 "Barlow Condensed",sans-serif;letter-spacing:.1em}
+.id-card-front .id-card-profile dd .status-dot{width:5px;height:5px;margin-right:4px}
+.id-card-back{
+  display:block;
+  padding:0;
+  background-image:url('/tva/assets/tva-card-back-reference.png');
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+.id-card-back>*{display:none}
+@media(max-width:540px){
+  .id-card-front .id-card-profile{padding:0 3.5%}
+  .id-card-front .id-card-profile dl div{padding:2px 0 3px}
+  .id-card-front .id-card-profile dt{font-size:4.5px}
+  .id-card-front .id-card-profile dd{font-size:6.5px}
+}
