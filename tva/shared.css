@@ -66,3 +66,6 @@ body:has(#heroTime)>footer{width:calc(100% - var(--rail));margin-left:var(--rail
 .next-project h2{color:var(--black);font-weight:700;line-height:.95}
 .next-project .btn{background:var(--black);color:var(--cream);border:1px solid var(--cream);font-weight:600}
 .next-project .btn:hover,.next-project .btn:focus-visible{background:var(--cream);color:var(--black);border-color:var(--black)}
+
+/* Preserve the TVA identification card's physical 55:88 portrait ratio. */
+.id-card-scene{aspect-ratio:55/88}

@@ -1,4 +1,5 @@
 void import('/router.js');
+const motionReady = import('/motion.js');
 
 /**
  * Kushal Portfolio — Shared JS
@@ -294,7 +295,7 @@ void import('/router.js');
     initLazyLoad();
     initVideoPlayers();
     initCaseModals();
-    initReveal();
+    motionReady.catch(initReveal);
     initHamburgerNav();
   });
 })();
