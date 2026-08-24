@@ -83,7 +83,7 @@ body:has(#heroTime)>footer{width:calc(100% - var(--rail));margin-left:var(--rail
 @media(max-width:540px){.id-card-profile{padding:9px 16px 8px}.id-card-profile-loki{width:46px;height:46px;margin-bottom:6px}.id-card-profile-loki img{width:204px;transform:translate(-140px,-67px)}.id-card-profile dl div{padding:3px 0 4px}.id-card-profile dt{font-size:5.5px}.id-card-profile dd{font-size:8px}}
 
 /* Use the supplied TVA card artwork as the exact front/back faces. */
-.id-card-face{border:0;background-color:#080706}
+.id-card-face{border:0;border-radius:0;background-color:#080706}
 .id-card-face:before,.id-card-face:after{display:none}
 .id-card-front{
   display:block;
@@ -160,3 +160,23 @@ body:has(#heroTime)>footer{width:calc(100% - var(--rail));margin-left:var(--rail
 }
 .id-card-edge--top{top:-5px;transform:rotateX(90deg)}
 .id-card-edge--bottom{bottom:-5px;transform:rotateX(-90deg)}
+
+/* Square off the rounded corners baked into the supplied front artwork. */
+.id-card-front:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:block;
+  border:0;
+  border-radius:0;
+  opacity:1;
+  pointer-events:none;
+  background:
+    linear-gradient(#090807 0 0) 10px 0/2px 20px no-repeat,
+    linear-gradient(#090807 0 0) 16px 0/5px 20px no-repeat,
+    linear-gradient(#090807 0 0) calc(100% - 12px) 0/2px 20px no-repeat,
+    linear-gradient(#090807 0 0) calc(100% - 21px) 0/5px 20px no-repeat,
+    linear-gradient(#c17642 0 0) top left/30px 20px no-repeat,
+    linear-gradient(#c17642 0 0) top right/30px 20px no-repeat;
+}
