@@ -110,10 +110,10 @@ body:has(#heroTime)>footer{width:calc(100% - var(--rail));margin-left:var(--rail
 }
 .id-card-front .id-card-profile-loki{display:none}
 .id-card-front .id-card-profile dl{width:100%;margin:0}
-.id-card-front .id-card-profile dl div{display:block;padding:3px 0 4px;border-bottom:1px solid rgba(210,146,86,.28);text-align:left}
-.id-card-front .id-card-profile dt{margin:0 0 1px;color:#c78a52;font-size:5px;font-weight:600;line-height:1;letter-spacing:.16em}
-.id-card-front .id-card-profile dd{margin:0;color:#dfb376;font:600 7px/1.1 "Barlow Condensed",sans-serif;letter-spacing:.1em}
-.id-card-front .id-card-profile dd .status-dot{width:5px;height:5px;margin-right:4px}
+.id-card-front .id-card-profile dl div{display:block;padding:2px 0 3px;border-bottom:1px solid rgba(222,179,118,.46);text-align:left}
+.id-card-front .id-card-profile dt{margin:0 0 2px;color:#df9d5e;font-size:6.5px;font-weight:700;line-height:1;letter-spacing:.13em}
+.id-card-front .id-card-profile dd{margin:0;color:#f4dfb8;font:700 10.5px/1.05 "Barlow Condensed",sans-serif;letter-spacing:.07em;text-shadow:0 0 5px rgba(216,149,84,.25)}
+.id-card-front .id-card-profile dd .status-dot{width:6px;height:6px;margin-right:5px}
 .id-card-back{
   display:block;
   padding:0;
@@ -126,6 +126,6 @@ body:has(#heroTime)>footer{width:calc(100% - var(--rail));margin-left:var(--rail
 @media(max-width:540px){
   .id-card-front .id-card-profile{padding:0 3.5%}
   .id-card-front .id-card-profile dl div{padding:2px 0 3px}
-  .id-card-front .id-card-profile dt{font-size:4.5px}
-  .id-card-front .id-card-profile dd{font-size:6.5px}
+  .id-card-front .id-card-profile dt{font-size:6px}
+  .id-card-front .id-card-profile dd{font-size:9.5px}
 }
