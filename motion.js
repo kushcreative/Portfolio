@@ -216,7 +216,9 @@ function initPageHeaderScroll() {
 
 function initSectionScroll() {
   const sections = unique(elements('main section, .site-main section')).filter(
-    (section) => !section.matches('.hero, .page-hero, .contact-hero, .project-hero, .proj-hero, .scroll-swap-wrap')
+    (section) =>
+      !section.closest('.id-card-scene') &&
+      !section.matches('.hero, .page-hero, .contact-hero, .project-hero, .proj-hero, .scroll-swap-wrap')
   );
 
   sections.forEach((section) => {
@@ -364,8 +366,12 @@ function initTVACard() {
   if (!scene || !card) return;
 
   scene.style.animation = 'none';
-  const state = { rx: 0, ry: 0 };
+  const state = { rx: 0, ry: 0, rz: 0 };
   let animation;
+  let autoTimer;
+  let autoDirection = 1;
+  let dragSafetyTimer;
+  let activePointerId;
   let dragging = false;
   let dragDistance = 0;
   let startX = 0;
@@ -375,7 +381,12 @@ function initTVACard() {
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
   const render = () => {
-    card.style.transform = `rotateX(${state.rx}deg) rotateY(${state.ry}deg)`;
+    if (![state.rx, state.ry, state.rz].every(Number.isFinite)) {
+      state.rx = 0;
+      state.ry = 0;
+      state.rz = 0;
+    }
+    card.style.transform = `rotateX(${state.rx}deg) rotateY(${state.ry}deg) rotateZ(${state.rz}deg)`;
     const back = Math.abs(Math.round(state.ry / 180)) % 2 === 1;
     scene.setAttribute('aria-pressed', String(back));
     scene.setAttribute(
@@ -385,11 +396,33 @@ function initTVACard() {
   };
 
   const stop = () => {
+    clearTimeout(autoTimer);
     animation?.stop();
     animation = undefined;
   };
 
-  const springTo = (target) => {
+  const scheduleAuto = (delay = 2200) => {
+    clearTimeout(autoTimer);
+    if (reducedMotion || dragging || document.hidden) return;
+    autoTimer = setTimeout(() => {
+      const readableFace = Math.round(state.ry / 180) * 180;
+      animation = animate(state, {
+        rx: autoDirection * 1.5,
+        ry: readableFace + autoDirection * 8,
+        rz: 0,
+      }, {
+        duration: 4.8,
+        ease: 'easeInOut',
+        onUpdate: render,
+        onComplete: () => {
+          autoDirection *= -1;
+          scheduleAuto(0);
+        },
+      });
+    }, delay);
+  };
+
+  const springTo = (target, resumeAuto = false) => {
     stop();
     if (reducedMotion) {
       Object.assign(state, target);
@@ -402,6 +435,7 @@ function initTVACard() {
       damping: 27,
       mass: 0.78,
       onUpdate: render,
+      onComplete: resumeAuto ? () => scheduleAuto() : undefined,
     });
   };
 
@@ -409,7 +443,22 @@ function initTVACard() {
     const targetY = flip
       ? Math.round(state.ry / 180) * 180 + 180
       : Math.round(state.ry / 180) * 180;
-    springTo({ rx: 0, ry: targetY });
+    springTo({ rx: 0, ry: targetY, rz: 0 }, true);
+  };
+
+  const armDragSafety = () => {
+    clearTimeout(dragSafetyTimer);
+    dragSafetyTimer = setTimeout(() => {
+      if (!dragging) return;
+      dragging = false;
+      dragDistance = Math.max(dragDistance, 7);
+      scene.classList.remove('is-dragging');
+      if (activePointerId !== undefined && scene.hasPointerCapture(activePointerId)) {
+        scene.releasePointerCapture(activePointerId);
+      }
+      activePointerId = undefined;
+      settle(false);
+    }, 1600);
   };
 
   scene.addEventListener('pointerdown', (event) => {
@@ -421,8 +470,10 @@ function initTVACard() {
     startY = event.clientY;
     startRX = state.rx;
     startRY = state.ry;
+    activePointerId = event.pointerId;
     scene.classList.add('is-dragging');
     scene.setPointerCapture(event.pointerId);
+    armDragSafety();
   });
 
   scene.addEventListener('pointermove', (event) => {
@@ -434,6 +485,7 @@ function initTVACard() {
         rx: clamp(startRX - dy * 0.2, -18, 18),
         ry: startRY + dx * 0.72,
       });
+      armDragSafety();
       if (Math.abs(dx) > Math.abs(dy)) event.preventDefault();
       return;
     }
@@ -450,13 +502,26 @@ function initTVACard() {
   const release = (event) => {
     if (!dragging) return;
     dragging = false;
+    clearTimeout(dragSafetyTimer);
     scene.classList.remove('is-dragging');
-    if (scene.hasPointerCapture(event.pointerId)) scene.releasePointerCapture(event.pointerId);
+    const pointerId = event?.pointerId ?? activePointerId;
+    if (pointerId !== undefined && scene.hasPointerCapture(pointerId)) {
+      scene.releasePointerCapture(pointerId);
+    }
+    activePointerId = undefined;
     settle(dragDistance < 7);
   };
 
   scene.addEventListener('pointerup', release);
   scene.addEventListener('pointercancel', release);
+  scene.addEventListener('lostpointercapture', release);
+  window.addEventListener('pointerup', release, true);
+  window.addEventListener('pointercancel', release, true);
+  window.addEventListener('blur', () => {
+    if (!dragging) return;
+    dragDistance = Math.max(dragDistance, 7);
+    release();
+  });
   scene.addEventListener('pointerleave', () => {
     if (!dragging) settle(false);
   });
@@ -467,7 +532,29 @@ function initTVACard() {
     }
   });
 
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      clearTimeout(dragSafetyTimer);
+      dragging = false;
+      activePointerId = undefined;
+      scene.classList.remove('is-dragging');
+      stop();
+    } else {
+      state.rx = 0;
+      state.ry = Math.round(state.ry / 180) * 180;
+      state.rz = 0;
+      render();
+      scheduleAuto();
+    }
+  });
+
+  window.addEventListener('pagehide', stop, { once: true });
+  card.style.transformOrigin = '50% 50%';
+  state.rx = 0;
+  state.ry = 0;
+  state.rz = 0;
   render();
+  scheduleAuto();
 }
 
 function showReducedMotionContent() {

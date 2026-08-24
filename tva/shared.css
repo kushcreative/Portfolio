@@ -69,3 +69,15 @@ body:has(#heroTime)>footer{width:calc(100% - var(--rail));margin-left:var(--rail
 
 /* Preserve the TVA identification card's physical 55:88 portrait ratio. */
 .id-card-scene{aspect-ratio:55/88}
+.tva-id-card{transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg);transform-origin:50% 50%}
+
+/* Front-panel profile content; the card shell and reverse artwork remain unchanged. */
+.id-card-profile{flex:1;display:flex;min-height:0;flex-direction:column;justify-content:center;padding:12px 20px 10px}
+.id-card-profile-loki{position:relative;flex:0 0 auto;width:54px;height:54px;margin:0 auto 8px;overflow:hidden;border:1px solid rgba(212,113,43,.72);border-radius:50%;background:#090908}
+.id-card-profile-loki img{position:absolute;left:50%;top:50%;width:240px;max-width:none;transform:translate(-165px,-79px);filter:saturate(1.12) brightness(1.12)}
+.id-card-profile dl{width:100%;margin:0}
+.id-card-profile dl div{display:block;padding:4px 0 5px;border-bottom:1px solid rgba(212,113,43,.24);text-align:left}
+.id-card-profile dt{margin:0 0 1px;color:rgba(212,113,43,.82);font-size:6px;font-weight:600;line-height:1.1;letter-spacing:.16em}
+.id-card-profile dd{color:#e2d5bc;font:600 9px/1.15 "Barlow Condensed",sans-serif;letter-spacing:.11em}
+.id-card-profile dd .status-dot{width:6px;height:6px;margin-right:5px;box-shadow:0 0 6px #6f9b5c}
+@media(max-width:540px){.id-card-profile{padding:9px 16px 8px}.id-card-profile-loki{width:46px;height:46px;margin-bottom:6px}.id-card-profile-loki img{width:204px;transform:translate(-140px,-67px)}.id-card-profile dl div{padding:3px 0 4px}.id-card-profile dt{font-size:5.5px}.id-card-profile dd{font-size:8px}}
